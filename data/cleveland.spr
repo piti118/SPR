@@ -1,0 +1,170 @@
+Trained Bagger SPR-08-00-00
+Classifiers: 10 Cut: 0
+Classifier 0 TopdownTree
+Trained TopdownTree SPR-08-00-00
+Nodes: 11 nodes.
+Id: 0 Score: 0.275229 Dim: 11 Cut: 0.5 Daughters: 1 2 n0: 79 n1: 30 w0: 79 w1: 30 deltaFom: 0.186874
+Id: 1 Score: 0.148148 Dim: 9 Cut: 1.5 Daughters: 3 4 n0: 69 n1: 12 w0: 69 w1: 12 deltaFom: 0.115025
+Id: 2 Score: 0.642857 Dim: 9 Cut: 0.55 Daughters: 5 6 n0: 10 n1: 18 w0: 10 w1: 18 deltaFom: 0.231188
+Id: 3 Score: 0.084507 Dim: 4 Cut: 278.5 Daughters: 7 8 n0: 65 n1: 6 w0: 65 w1: 6 deltaFom: 0.0604867
+Id: 4 Score: 0.6 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 4 n1: 6 w0: 4 w1: 6 deltaFom: 0
+Id: 5 Score: 0.384615 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 8 n1: 5 w0: 8 w1: 5 deltaFom: 0
+Id: 6 Score: 0.866667 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 2 n1: 13 w0: 2 w1: 13 deltaFom: 0
+Id: 7 Score: 0.0181818 Dim: 12 Cut: 4.5 Daughters: 9 10 n0: 54 n1: 1 w0: 54 w1: 1 deltaFom: 0.00387249
+Id: 8 Score: 0.3125 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 11 n1: 5 w0: 11 w1: 5 deltaFom: 0
+Id: 9 Score: 0 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 41 n1: 0 w0: 41 w1: 0 deltaFom: 0
+Id: 10 Score: 0.0714286 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 13 n1: 1 w0: 13 w1: 1 deltaFom: 0
+Classifier 1 TopdownTree
+Trained TopdownTree SPR-08-00-00
+Nodes: 11 nodes.
+Id: 0 Score: 0.238532 Dim: 12 Cut: 4.5 Daughters: 1 2 n0: 83 n1: 26 w0: 83 w1: 26 deltaFom: 0.226045
+Id: 1 Score: 0.0987654 Dim: 9 Cut: 1.7 Daughters: 3 4 n0: 73 n1: 8 w0: 73 w1: 8 deltaFom: 0.0382762
+Id: 2 Score: 0.642857 Dim: 2 Cut: 3.5 Daughters: 5 6 n0: 10 n1: 18 w0: 10 w1: 18 deltaFom: 0.382653
+Id: 3 Score: 0.057971 Dim: 3 Cut: 113.5 Daughters: 7 8 n0: 65 n1: 4 w0: 65 w1: 4 deltaFom: 0.0248785
+Id: 4 Score: 0.333333 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 8 n1: 4 w0: 8 w1: 4 deltaFom: 0
+Id: 5 Score: 0.375 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 10 n1: 6 w0: 10 w1: 6 deltaFom: 0
+Id: 6 Score: 1 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 0 n1: 12 w0: 0 w1: 12 deltaFom: 0
+Id: 7 Score: 0.214286 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 11 n1: 3 w0: 11 w1: 3 deltaFom: 0
+Id: 8 Score: 0.0181818 Dim: 11 Cut: 0.5 Daughters: 9 10 n0: 54 n1: 1 w0: 54 w1: 1 deltaFom: 0.00595041
+Id: 9 Score: 0 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 45 n1: 0 w0: 45 w1: 0 deltaFom: 0
+Id: 10 Score: 0.1 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 9 n1: 1 w0: 9 w1: 1 deltaFom: 0
+Classifier 2 TopdownTree
+Trained TopdownTree SPR-08-00-00
+Nodes: 15 nodes.
+Id: 0 Score: 0.275229 Dim: 7 Cut: 164 Daughters: 1 2 n0: 79 n1: 30 w0: 79 w1: 30 deltaFom: 0.103527
+Id: 1 Score: 0.412698 Dim: 4 Cut: 245.5 Daughters: 3 4 n0: 37 n1: 26 w0: 37 w1: 26 deltaFom: 0.0827514
+Id: 2 Score: 0.0869565 Dim: 9 Cut: 0.9 Daughters: 5 6 n0: 42 n1: 4 w0: 42 w1: 4 deltaFom: 0.043385
+Id: 3 Score: 0.318182 Dim: 7 Cut: 149 Daughters: 7 8 n0: 30 n1: 14 w0: 30 w1: 14 deltaFom: 0.0743802
+Id: 4 Score: 0.631579 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 7 n1: 12 w0: 7 w1: 12 deltaFom: 0
+Id: 5 Score: 0.0285714 Dim: 4 Cut: 216.5 Daughters: 9 10 n0: 34 n1: 1 w0: 34 w1: 1 deltaFom: 0.00816327
+Id: 6 Score: 0.272727 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 8 n1: 3 w0: 8 w1: 3 deltaFom: 0
+Id: 7 Score: 0.181818 Dim: 3 Cut: 129 Daughters: 11 12 n0: 18 n1: 4 w0: 18 w1: 4 deltaFom: 0.0465565
+Id: 8 Score: 0.454545 Dim: 6 Cut: 1 Daughters: 13 14 n0: 12 n1: 10 w0: 12 w1: 10 deltaFom: 0.132231
+Id: 9 Score: 0.1 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 9 n1: 1 w0: 9 w1: 1 deltaFom: 0
+Id: 10 Score: 0 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 25 n1: 0 w0: 25 w1: 0 deltaFom: 0
+Id: 11 Score: 0.3 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 7 n1: 3 w0: 7 w1: 3 deltaFom: 0
+Id: 12 Score: 0.0833333 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 11 n1: 1 w0: 11 w1: 1 deltaFom: 0
+Id: 13 Score: 0.272727 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 8 n1: 3 w0: 8 w1: 3 deltaFom: 0
+Id: 14 Score: 0.636364 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 4 n1: 7 w0: 4 w1: 7 deltaFom: 0
+Classifier 3 TopdownTree
+Trained TopdownTree SPR-08-00-00
+Nodes: 11 nodes.
+Id: 0 Score: 0.192661 Dim: 9 Cut: 1.7 Daughters: 1 2 n0: 88 n1: 21 w0: 88 w1: 21 deltaFom: 0.115848
+Id: 1 Score: 0.104651 Dim: 11 Cut: 0.5 Daughters: 3 4 n0: 77 n1: 9 w0: 77 w1: 9 deltaFom: 0.0221823
+Id: 2 Score: 0.521739 Dim: 4 Cut: 251.5 Daughters: 5 6 n0: 11 n1: 12 w0: 11 w1: 12 deltaFom: 0.703795
+Id: 3 Score: 0.0704225 Dim: 4 Cut: 285.5 Daughters: 7 8 n0: 66 n1: 5 w0: 66 w1: 5 deltaFom: 0.0203335
+Id: 4 Score: 0.266667 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 11 n1: 4 w0: 11 w1: 4 deltaFom: 0
+Id: 5 Score: 0.153846 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 11 n1: 2 w0: 11 w1: 2 deltaFom: 0
+Id: 6 Score: 1 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 0 n1: 10 w0: 0 w1: 10 deltaFom: 0
+Id: 7 Score: 0.0350877 Dim: 12 Cut: 6.5 Daughters: 9 10 n0: 55 n1: 2 w0: 55 w1: 2 deltaFom: 0.0231456
+Id: 8 Score: 0.214286 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 11 n1: 3 w0: 11 w1: 3 deltaFom: 0
+Id: 9 Score: 0 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 47 n1: 0 w0: 47 w1: 0 deltaFom: 0
+Id: 10 Score: 0.2 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 8 n1: 2 w0: 8 w1: 2 deltaFom: 0
+Classifier 4 TopdownTree
+Trained TopdownTree SPR-08-00-00
+Nodes: 13 nodes.
+Id: 0 Score: 0.266055 Dim: 9 Cut: 2 Daughters: 1 2 n0: 80 n1: 29 w0: 80 w1: 29 deltaFom: 0.0955077
+Id: 1 Score: 0.214286 Dim: 4 Cut: 266.5 Daughters: 3 4 n0: 77 n1: 21 w0: 77 w1: 21 deltaFom: 0.0596392
+Id: 2 Score: 0.727273 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 3 n1: 8 w0: 3 w1: 8 deltaFom: 0
+Id: 3 Score: 0.146667 Dim: 0 Cut: 50.5 Daughters: 5 6 n0: 64 n1: 11 w0: 64 w1: 11 deltaFom: 0.0581589
+Id: 4 Score: 0.434783 Dim: 4 Cut: 295 Daughters: 7 8 n0: 13 n1: 10 w0: 13 w1: 10 deltaFom: 0.313685
+Id: 5 Score: 0.290323 Dim: 7 Cut: 169.5 Daughters: 9 10 n0: 22 n1: 9 w0: 22 w1: 9 deltaFom: 0.357814
+Id: 6 Score: 0.0454545 Dim: 12 Cut: 4.5 Daughters: 11 12 n0: 42 n1: 2 w0: 42 w1: 2 deltaFom: 0.0280992
+Id: 7 Score: 0.727273 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 3 n1: 8 w0: 3 w1: 8 deltaFom: 0
+Id: 8 Score: 0.166667 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 10 n1: 2 w0: 10 w1: 2 deltaFom: 0
+Id: 9 Score: 0.666667 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 4 n1: 8 w0: 4 w1: 8 deltaFom: 0
+Id: 10 Score: 0.0526316 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 18 n1: 1 w0: 18 w1: 1 deltaFom: 0
+Id: 11 Score: 0 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 34 n1: 0 w0: 34 w1: 0 deltaFom: 0
+Id: 12 Score: 0.2 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 8 n1: 2 w0: 8 w1: 2 deltaFom: 0
+Classifier 5 TopdownTree
+Trained TopdownTree SPR-08-00-00
+Nodes: 9 nodes.
+Id: 0 Score: 0.238532 Dim: 12 Cut: 4.5 Daughters: 1 2 n0: 83 n1: 26 w0: 83 w1: 26 deltaFom: 0.221757
+Id: 1 Score: 0.08 Dim: 9 Cut: 1.7 Daughters: 3 4 n0: 69 n1: 6 w0: 69 w1: 6 deltaFom: 0.0778243
+Id: 2 Score: 0.588235 Dim: 4 Cut: 244 Daughters: 5 6 n0: 14 n1: 20 w0: 14 w1: 20 deltaFom: 0.49827
+Id: 3 Score: 0.016129 Dim: 0 Cut: 60 Daughters: 7 8 n0: 61 n1: 1 w0: 61 w1: 1 deltaFom: 0.00541103
+Id: 4 Score: 0.384615 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 8 n1: 5 w0: 8 w1: 5 deltaFom: 0
+Id: 5 Score: 0.235294 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 13 n1: 4 w0: 13 w1: 4 deltaFom: 0
+Id: 6 Score: 0.941176 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 1 n1: 16 w0: 1 w1: 16 deltaFom: 0
+Id: 7 Score: 0 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 52 n1: 0 w0: 52 w1: 0 deltaFom: 0
+Id: 8 Score: 0.1 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 9 n1: 1 w0: 9 w1: 1 deltaFom: 0
+Classifier 6 TopdownTree
+Trained TopdownTree SPR-08-00-00
+Nodes: 11 nodes.
+Id: 0 Score: 0.275229 Dim: 9 Cut: 1.55 Daughters: 1 2 n0: 79 n1: 30 w0: 79 w1: 30 deltaFom: 0.152329
+Id: 1 Score: 0.160494 Dim: 12 Cut: 4.5 Daughters: 3 4 n0: 68 n1: 13 w0: 68 w1: 13 deltaFom: 0.0521484
+Id: 2 Score: 0.607143 Dim: 8 Cut: 0.5 Daughters: 5 6 n0: 11 n1: 17 w0: 11 w1: 17 deltaFom: 0.46301
+Id: 3 Score: 0.106061 Dim: 9 Cut: 0.45 Daughters: 7 8 n0: 59 n1: 7 w0: 59 w1: 7 deltaFom: 0.0352667
+Id: 4 Score: 0.4 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 9 n1: 6 w0: 9 w1: 6 deltaFom: 0
+Id: 5 Score: 0.3125 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 11 n1: 5 w0: 11 w1: 5 deltaFom: 0
+Id: 6 Score: 1 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 0 n1: 12 w0: 0 w1: 12 deltaFom: 0
+Id: 7 Score: 0.189189 Dim: 7 Cut: 178 Daughters: 9 10 n0: 30 n1: 7 w0: 30 w1: 7 deltaFom: 0.135635
+Id: 8 Score: 0 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 29 n1: 0 w0: 29 w1: 0 deltaFom: 0
+Id: 9 Score: 0.368421 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 12 n1: 7 w0: 12 w1: 7 deltaFom: 0
+Id: 10 Score: 0 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 18 n1: 0 w0: 18 w1: 0 deltaFom: 0
+Classifier 7 TopdownTree
+Trained TopdownTree SPR-08-00-00
+Nodes: 13 nodes.
+Id: 0 Score: 0.302752 Dim: 9 Cut: 1.7 Daughters: 1 2 n0: 76 n1: 33 w0: 76 w1: 33 deltaFom: 0.157823
+Id: 1 Score: 0.223404 Dim: 2 Cut: 3.5 Daughters: 3 4 n0: 73 n1: 21 w0: 73 w1: 21 deltaFom: 0.120042
+Id: 2 Score: 0.8 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 3 n1: 12 w0: 3 w1: 12 deltaFom: 0
+Id: 3 Score: 0.107692 Dim: 0 Cut: 58.5 Daughters: 5 6 n0: 58 n1: 7 w0: 58 w1: 7 deltaFom: 0.086459
+Id: 4 Score: 0.482759 Dim: 6 Cut: 1 Daughters: 7 8 n0: 15 n1: 14 w0: 15 w1: 14 deltaFom: 0.168321
+Id: 5 Score: 0.0377358 Dim: 4 Cut: 232.5 Daughters: 9 10 n0: 51 n1: 2 w0: 51 w1: 2 deltaFom: 0.00548502
+Id: 6 Score: 0.416667 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 7 n1: 5 w0: 7 w1: 5 deltaFom: 0
+Id: 7 Score: 0.2 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 8 n1: 2 w0: 8 w1: 2 deltaFom: 0
+Id: 8 Score: 0.631579 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 7 n1: 12 w0: 7 w1: 12 deltaFom: 0
+Id: 9 Score: 0 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 26 n1: 0 w0: 26 w1: 0 deltaFom: 0
+Id: 10 Score: 0.0740741 Dim: 4 Cut: 260 Daughters: 11 12 n0: 25 n1: 2 w0: 25 w1: 2 deltaFom: 0.0236362
+Id: 11 Score: 0.153846 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 11 n1: 2 w0: 11 w1: 2 deltaFom: 0
+Id: 12 Score: 0 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 14 n1: 0 w0: 14 w1: 0 deltaFom: 0
+Classifier 8 TopdownTree
+Trained TopdownTree SPR-08-00-00
+Nodes: 15 nodes.
+Id: 0 Score: 0.247706 Dim: 7 Cut: 158.5 Daughters: 1 2 n0: 82 n1: 27 w0: 82 w1: 27 deltaFom: 0.112228
+Id: 1 Score: 0.423077 Dim: 9 Cut: 2 Daughters: 3 4 n0: 30 n1: 22 w0: 30 w1: 22 deltaFom: 0.16753
+Id: 2 Score: 0.0877193 Dim: 2 Cut: 3.5 Daughters: 5 6 n0: 52 n1: 5 w0: 52 w1: 5 deltaFom: 0.0333988
+Id: 3 Score: 0.317073 Dim: 4 Cut: 241.5 Daughters: 7 8 n0: 28 n1: 13 w0: 28 w1: 13 deltaFom: 0.0673125
+Id: 4 Score: 0.818182 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 2 n1: 9 w0: 2 w1: 9 deltaFom: 0
+Id: 5 Score: 0.025641 Dim: 3 Cut: 121 Daughters: 9 10 n0: 38 n1: 1 w0: 38 w1: 1 deltaFom: 0.00762656
+Id: 6 Score: 0.222222 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 14 n1: 4 w0: 14 w1: 4 deltaFom: 0
+Id: 7 Score: 0.190476 Dim: 6 Cut: 1 Daughters: 11 12 n0: 17 n1: 4 w0: 17 w1: 4 deltaFom: 0.0436199
+Id: 8 Score: 0.45 Dim: 4 Cut: 267 Daughters: 13 14 n0: 11 n1: 9 w0: 11 w1: 9 deltaFom: 0.09
+Id: 9 Score: 0.1 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 9 n1: 1 w0: 9 w1: 1 deltaFom: 0
+Id: 10 Score: 0 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 29 n1: 0 w0: 29 w1: 0 deltaFom: 0
+Id: 11 Score: 0.0909091 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 10 n1: 1 w0: 10 w1: 1 deltaFom: 0
+Id: 12 Score: 0.3 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 7 n1: 3 w0: 7 w1: 3 deltaFom: 0
+Id: 13 Score: 0.6 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 4 n1: 6 w0: 4 w1: 6 deltaFom: 0
+Id: 14 Score: 0.3 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 7 n1: 3 w0: 7 w1: 3 deltaFom: 0
+Classifier 9 TopdownTree
+Trained TopdownTree SPR-08-00-00
+Nodes: 13 nodes.
+Id: 0 Score: 0.256881 Dim: 7 Cut: 163.5 Daughters: 1 2 n0: 81 n1: 28 w0: 81 w1: 28 deltaFom: 0.0992455
+Id: 1 Score: 0.376812 Dim: 3 Cut: 129 Daughters: 3 4 n0: 43 n1: 26 w0: 43 w1: 26 deltaFom: 0.0960613
+Id: 2 Score: 0.05 Dim: 10 Cut: 1.5 Daughters: 5 6 n0: 38 n1: 2 w0: 38 w1: 2 deltaFom: 0.0263636
+Id: 3 Score: 0.548387 Dim: 7 Cut: 145.5 Daughters: 7 8 n0: 14 n1: 17 w0: 14 w1: 17 deltaFom: 0.059838
+Id: 4 Score: 0.236842 Dim: 9 Cut: 1.35 Daughters: 9 10 n0: 29 n1: 9 w0: 29 w1: 9 deltaFom: 0.0772359
+Id: 5 Score: 0 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 29 n1: 0 w0: 29 w1: 0 deltaFom: 0
+Id: 6 Score: 0.181818 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 9 n1: 2 w0: 9 w1: 2 deltaFom: 0
+Id: 7 Score: 0.692308 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 4 n1: 9 w0: 4 w1: 9 deltaFom: 0
+Id: 8 Score: 0.444444 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 10 n1: 8 w0: 10 w1: 8 deltaFom: 0
+Id: 9 Score: 0.148148 Dim: 0 Cut: 56.5 Daughters: 11 12 n0: 23 n1: 4 w0: 23 w1: 4 deltaFom: 0.0542564
+Id: 10 Score: 0.454545 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 6 n1: 5 w0: 6 w1: 5 deltaFom: 0
+Id: 11 Score: 0.0588235 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 16 n1: 1 w0: 16 w1: 1 deltaFom: 0
+Id: 12 Score: 0.3 Dim: -1 Cut: 0 Daughters: -1 -1 n0: 7 n1: 3 w0: 7 w1: 3 deltaFom: 0
+==================================================
+Dimensions:
+    0                                      age
+    1                                      sex
+    2                                       cp
+    3                                 trestbps
+    4                                     chol
+    5                                      fbs
+    6                                  restecg
+    7                                  thalach
+    8                                    exang
+    9                                  oldpeak
+   10                                    slope
+   11                                       ca
+   12                                     thal
+==================================================

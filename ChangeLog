@@ -1,0 +1,25 @@
+2009-05-28  Andy Buckley  <andy@insectnation.org>
+
+	* 3.3.2 release.
+
+	* One more ROOT-handling fix: finish configure gracefully if ROOT
+	can't be found.
+
+2009-03-30  Andy Buckley  <andy@insectnation.org>
+
+	* Build system fixes: handle case where ROOT is not present
+	better, remove build flag duplication, proper propagation of
+	CXXFLAGS variable for changing optimisation and debug mode.
+
+2008-08-11  Andy Buckley  <andy@insectnation.org>
+
+	* Improvements to ROOT integration, including automatic ROOT path
+	discovery (if root-config is in the user $PATH) and use of
+	root-config to get the correct link flags.
+
+	* General build robustness fixes.
+
+2008-08-01  Andy Buckley  <andy@insectnation.org>
+
+	* Import to SVN from SourceForge CVS.
+

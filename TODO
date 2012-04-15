@@ -1,0 +1,6 @@
+SPR TODOs
+=========
+
+* Add --debug, --no-debug
+* Check LDFLAGS, CXXFLAGS control
+

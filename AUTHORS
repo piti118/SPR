@@ -1,0 +1,22 @@
+StatPatternRecognition
+----------------------
+
+Creator, main developer - Ilya Narsky <inarsky@yahoo.com>
+
+Adaptation of the random number generator, matrix operations and
+various math routines from public packages - Xuan Luo
+<xuanluo@caltech.edu>
+
+GNU autotools and Makefiles - Andy Buckley <andy@insectnation.org> and
+Xuan Luo <xuanluo@caltech.edu>
+
+ROOT reader and writer - Jan Strube <jstrube@slac.stanford.edu> and
+Josh Boehm <jaboehm@fas.harvard.edu>
+
+Test builds on various platforms, Makefile cleanup and integration
+into Fedora 6 and later - Michael Thomas <thomas@hep.caltech.edu>
+
+Gene Expression Programming - Julian Bunn <julian.bunn@caltech.edu>
+
+ECOC-based matrix generator for the multiclass learner by
+Allwein-Schapire-Singer - Piti Ongmongkolkul <piti@caltech.edu>

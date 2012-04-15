@@ -1,0 +1,2652 @@
+$Id: HISTORY,v 1.56 2008-05-09 21:25:25 narsky Exp $
+
+05.09.2008 narsky V08-02-00
+	Minor changes. Added an extra handle to SprGEP. Modified the
+	random hill climbing algorithm for the matrix generation to
+	invert rows as well, not only columns. Fixed the author list.
+
+05.08.2008 narsky V08-01-00
+	Piti Ongmongkolkul implemented a multi-class learner matrix
+	generator capable of optimizing row or column Hamming
+	distance. For detail, see README section 2a.4.
+
+	Rules of ownership of weak classifiers by super-engines such
+	as AdaBoost or Bagger have been changed to reduce memory
+	consumption. As a consequence all makeTrained() methods are
+	now non-const. The user can revert to the old design by
+	setting SprEnforceLowMemory flag to false. For detail see
+	section 17 in README.
+
+	Cleaned up SprGEP and SprChromosome implementations. The GEP
+	algorithm is now ready for mass consumption.
+
+	Fixed bugs in SprFisher and SprLogitR that prevented these
+	methods from being used by the "add n remove r" algorithm.
+
+	Fixed a bug in SprPreFilter that prevented variable
+	transformations from being applied correctly in some cases.
+
+	Cleaned up README.
+
+	Various fixes elsewhere.
+
+04.02.2008 narsky V08-00-00
+	Implemented a new multiclass learning algorithm, "binary
+	encoder". See section 2a.2 in README. The new method is only
+	accessible through SprMultiClassApp but not (yet) from the
+	Root interface.
+
+	Changed format used for storing trained multiclass learner
+	configurations. The user will not be able to use multiclass
+	learner configuration files produced with earlier versions.
+
+	Added several options to SprMultiClassApp: adjustment of
+	weights for classifiers and exclusion of neutral classes
+	(indicated by zero's in the class-classifier matrix) from the
+	loss computation for each class. See section 2a.1 in README.
+
+	The multiclass learner can now compute missing values for each
+	input class separately and assign class labels to new data by
+	replacing missing values with medians for each class in
+	turn. See section 2a.3 in README.
+
+	The framework for treatment of missing values has been
+	changed. Instead of letting every method replace missing
+	values on fly with '-m' command-line option, the package applies
+	a data transformation in the same way as PCA or normalization
+	of variables to the same input range. First, you need to
+	compute medians or average of 1D marginal densities through
+	SprTransformationApp and then apply the computed
+	transformation using '-Q' option. See section 15 in README.
+
+02.29.2008 narsky V07-15-00
+	Changed the splitting algorithm for cross-validation to allow
+	for any number of CV pieces. The algorithm is now capable of
+	dividing the dataset into subsets efficiently for any number
+	of subsets including extreme cases such as the "leave one out" 
+	CV method.
+
+	Introduced new interfaces for SprFomCalculator. One does not
+	have to supply the full list of trained classifiers for CV -
+	instead one only needs to supply a vector of responses 
+	computed for all the trained classifiers. SprCrossValidator
+	now processes the trained classifier for each subset separately
+	and deletes it immediately after responses are filled to avoid
+	excessive memory consumption.
+
+	Added classBlind flag to SprAbsFilter::replaceMissing() method.
+	If set to false, it will compute missing values as medians
+	of distributions for a specific class. This flag is set to true
+	in all executables by default.
+
+	Reduced verbosity of some classifiers to make output from 
+	SprAddNRemoveRApp more pleasant.
+
+	SprIOTestApp now displays full info about all classes found
+	in the input data.
+
+02.25.2008 narsky V07-14-00
+	Implemented a better splitting algorithm for dividing data into
+	pieces for cross-validation. The pieces are now evenly divided
+	across different classes (with an arbitrary number of classes
+	allowed). The leftovers are added to the last piece.
+
+	Implemented cross-validation for the multiclass learner. Invoked
+	by -x option of SprMultiClassApp.
+
+	Implemented "integrate" option for cross-validation. If the
+	"integrate" flag is set to true, FOM is integrated over all
+ 	points in the supplied data. If "integrate" is false, a
+ 	separate FOM is computed for each validation piece and then an
+ 	average of these FOMs is estimated and an error is derived
+ 	from the spread of the FOM values around the average. If
+ 	"integrate" is true, no error is estimated.
+
+	Fixed a bug in SprTrainedMultiClassLearner::classes() - due to
+	some strange reason it returned an ordered list of classes
+	which, of course, screwed up the classification table returned
+	by SprMultiClassApp if the input classes were not supplied
+	in the same order.
+
+02.22.2008 narsky V07-13-00
+	Fixed a bug in computation of SprLoss::correct_id (the default
+	choice for SprAddNRemoveRApp).
+
+	Fixed a bug in cross-validation settings for SprDecisionTreeApp:
+	the classes for the cross-validator were always set to 0 and 1
+	by mistake. If the user attempted to run CV with other classes,
+	this would give wrong results. CV in SprBaggerDecisionTreeApp
+	and SprAdaBoostDecisionTreeApp was free of this bug.
+
+	Added a new option, -C, to the 3 executables: SprDecisionTreeApp, 
+	SprBaggerDecisionTreeApp and SprAdaBoostDecisionTreeApp. Now -c
+	option chooses FOM to be optimized by the decision tree, and -C
+	chooses FOM to be monitored for cross-validation or validation
+	data. The default settings are: Gini index for optimization and
+	accuracy (correctly classified fraction) for monitoring.
+
+	Introduced SprCrossValidatorApp, an executable capable of
+	running cross-validation with any classifier included in the
+	package. The input configuration file follows the same syntax
+	as booster.config.
+
+	useStandard() and useNormalized() methods of trained classifiers
+	now change the default cut on the classifier output when
+	appropriate: 0.0 for useStandard() and 0.5 for useNormalized().
+	The cut from the trainable classifier is now forced onto the 
+	constructed trained counterpart only when the cut is not empty.
+
+	Implemented several methods in SprClassifierEvaluator for
+	computing variable interactions. variableInteraction() now
+	computes inetraction between any two subsets of variables.
+	The full syntax for defining subsets is explained in
+	SprClassifierEvaluator.hh and README.
+	sortByInteraction() sorts variables by their interactions in the
+	descending order. This method is in the process of being tested
+	on real-world datasets. The hope is that this method can rank
+	reliably input variables to let the user choose a subset of lowest
+	dimensionality. All new methods are invoked by 
+	SprVariableImportanceApp.
+
+	Julian Bunn implemented a first approximation of a gene expression
+	programming classification algorithm. This is still raw and not
+	recommended for use until its behavior is better understood.
+
+02.14.2008 narsky V07-12-01
+	Added more includes to fix compilation with gcc 4.3.
+
+02.08.2008 narsky V07-12-00
+	Implemented a fix to let the 'Normalize" filter be applied with
+	user-customized input variable lists. Now after training a
+	Normalize filter on data, you can use -z and -V options of 
+	all executables to modify variable lists with the -Q option 
+	which applies the filter.
+
+02.06.2008 narsky V07-11-00
+	Fixed a bug in SprDecisionTree::setData() which failed to reset
+	the dimensionality of SprIntegerBootstrap for variable sampling.
+	This caused SprAddNRemoveRApp crash for random forest (but not
+	for bagged decision trees).
+
+01.30.2008 narsky V07-10-01
+        Minor fixes. Replaced 'class SprPoint' with 'struct SprPoint'
+        everywhere. Fixed a bug in SprRootAdapter::scaleWeights().
+
+01.17.2008 narsky V07-10-00
+	Implemented computation of variable importance for the neural
+	network. Included a couple of new sections in README and edited
+	for clarity. Include '-m' option for missing values in a few
+	executables. Applied various comsetic changes.
+
+01.03.2008 narsky V07-09-00
+	Introduced range booster, a new classification method based on
+	decreasing weights of events outside the desired efficiency
+	range. See README section 2.2 for detail. The new functionality
+	can be invoked by SprBaggerApp with -R option.
+
+	Implemented storing trained classifier cuts into configuration
+	files for the bagger, booster, Fisher and logistic regression.
+	Since these were not stored previously, it was not in fact possible
+	to boost these methods by Discrete or Epsilon AdaBoost (it was
+	possible to boost but the full boosting info was not stored
+	into classifier configuration files). Real AdaBoost and bagging
+	were not affected, and neither were decision trees and neural
+	nets.
+
+	Fixed a bug in SprAbsFilter::fastRemove() method which could have
+	affected results of the bump hunter optimization for more than one
+	bump. If you searched for one bump only, nothing to worry about.
+
+	Fixed a bug in SprStdBackprop::reset() method - the bootstrap needs
+	to be reinitialized on input data every time.
+
+	Cleaned up README.
+
+12.18.2007 narsky V07-08-00
+	Introduced SprVarTransformerSequence for handling an arbitrary
+	sequence of input variable transformations. Introduced
+	SprInputNormalizer for normalization of input variables. This
+	raises the number of implemented transformations to two: PCA
+	and InputNormalizer. Replaced SprPCAApp with
+	SprTransformationApp which can handle an arbitrary sequence of
+	input transformations supplied as an input string. See README
+	section 5 for detail.
+
+	Added SprClassifierEvaluator::addNremoveR() method and
+	included SprAddNRemoveRApp executable in the package. This
+	implements the "add n remove r" model for variable
+	selection. See README section 7 for detail.
+
+	Promoted useNormalized() and useStandard() to generic methods
+	of SprAbsTrainedClassifier, where the first one switches the
+	classifier range to [0,1] and the second one switches to
+	whatever is the default for this classifier. For classifiers
+	like neural net (which by default returns a number between 0
+	and 1) these do not do anything, of course.
+
+	Introduced useNClassifiers() method for the trained AdaBoost
+	and Bagger which lets the user limit the number of weak
+	classifiers used for computation of response. Useful if you
+	want to explore how the classifier output depends on the
+	number of weak classifiers.
+
+	Modified SprCrossValidator to return errors for
+	cross-validated FOMs as well.
+
+	Fixed a bug in SprSimpleReader which caused incorrect read-out
+	of input data for modes 5, 6 and 7 in case a subset of
+	variables was selected using -V or -z options.
+
+11.30.2007 narsky V07-07-02
+	Fixes a bug in SprRootAdapter::correlation().
+
+11.30.2007 narsky V07-07-01
+	Removed src/SprTrainedAdaBoostCombiner.cc.
+
+11.30.2007 narsky V07-07-00
+	Fixed a bug in SprOutputWriterApp and SprOutputAnalyzerApp:
+	the input variable list needs to be reset after a variable
+	transformation is applied.
+
+	Added mode 7 to SprSimpleReader. SPR can now treat files produced
+	by SprOutputWriterApp as input files.
+
+	Added computation of variable interaction to SprClassifierEvaluator.
+	Included this method in SprVariableImportanceApp
+	and SprRootAdapter. For details, see README.
+
+	Added computation of the correlation between each input variable 
+	and the class label to SprRootAdapter.
+
+	Various minor changes to root/*.C scripts.
+
+	Added an example of variable selection, root/spr_var_selection.C,
+	which uses Cleveland heart-disease data. 
+
+11.11.2007 narsky V07-06-01
+	Fixed a bug in SprTransformerFilter.cc (variable lists for 
+	coordinate mapper initialization were swapped). Included
+	the variable transformation interface in all the execs (-Q option).
+	Updated README.
+
+11.06.2007 narsky V07-06-00
+	Implemented framework for variable transformation and feature
+	selection. So far, only PCA is included. PCA is fully integrated
+	in SprRootAdapter. Integration in all executables is pending.
+
+	Added matrix diagonalization to SprSymMatrix. Added std::vector
+	shortcuts for SprVector.
+
+10.29.2007 narsky V07-05-01
+	Minor fixes in Root scripts.
+
+10.29.2007 narsky V07-05-00
+	Added SprClassifierEvaluator. For now it is used only to compute 
+	variable importance for any two-class or multi-class learner. May
+	be used for similar tasks (feed data to a trained classifier and
+	compute a gross value) in the future.
+
+	Variable importance is now computed with errors estimated as
+	sqrt(sum_i (inc_i-<inc>)^2/n) where inc_i is the increase in 
+	validation loss for each permutation trial. Fixed a bug in variable
+	importance estimation: importances of all variables were offset
+	by a constant amount.
+
+	Included the multi-class learner in SprVariableImportanceApp.
+
+	Fixed a bug in SprRootAdapter::split() method. After splitting,
+	the training data was silently reset to its previous state (before
+	splitting) in a call to correlation() or chooseClasses() method.
+	If someone used this method and did not check the size of training
+	data, the performance of classifiers would be too optimistic
+	because they were trained on validation data as well. This did
+	not affect in any way split() method in all the executables
+	(because that one came straight from SprAbsFilter) and that one
+	always worked correctly.
+
+	SprAbsFilter::filterByClass() has been turned into 
+	a consecutive filter rather than a regular filter. 
+
+	In SprRootAdapter::histogram() method, (xlo,dx) input was
+	replaced with (xlo,xhi) input. A corresponding change was made
+	spr_plot.C interfaces.
+
+	Improved the logic of SprRootAdapter and put in some protections 
+	against a strange sequence of actions on the part of the user.
+
+	Cleaned up SprRootReader. Implemented read-out from Root files
+	that place signal and background events in different trees
+	with identical variables in them (the idea itself of storing your
+	data in such a way seems a bit insane to me, but apparently people
+	do this...).
+
+	Added root/spr_tmva.C and root/spr_mlp.C to demonstrate how
+	SPR works on examples adopted by the Root-based packages.
+
+	Default compiler flags in configure are not set to -fPIC -O2.
+	configure.save.noDebug still has -O4 -pedantic.
+
+10.25.2007 narsky V07-04-00
+	Added parallelization of Bagger. The two bagger executables,
+	SprBaggerApp and SprBaggerDecisionTreeApp, now take -G option
+	which generates random seed for bootstrap from the microsecond part of
+	time of day. Output configs from several baggers executed 
+	independently of each other with -G option can be combined using 
+	SprAddBaggersApp.
+
+	This led to changes in the decision tree and bagger syntax in
+	input config files. Now the user must specify one extra parameter
+	for random seed generation. See data/booster.config for an updated
+	correct syntax.
+
+	Finished implementation of the multi-class learner support in 
+	SprRootAdapter.
+
+	Changed the logic of variable mapping in SprRootAdapter. Now
+	all variables are remapped between trained classifiers and data
+	at testing. Easier to support.
+
+10.22.2007 narsky V07-03-00
+	The user can now filter on user-defined classes in SprPreFilter.
+	See README "7.  Handling input variables".
+
+	Added SprMultiClassPlotter, a class for plotting output of the
+	multi-class learner.
+
+	Included the multi-class learner in SprRootAdapter. It is now
+	available to interactive ROOT users.
+
+10.10.2007 narsky V07-02-01
+	Replace slashes with underscores in Root leaf names 
+	in SprRootWriter to prevent crashes. This problem was reported
+	by a user who is forced to use '/' for input leaf names. Not
+	clear to me when input leaf names require '/' and when one can
+	get away with '.'.
+
+	Introduced SprIOTestApp for a quick test of SPR I/O
+	functionality.
+
+10.05.2007 narsky V07-02-00
+	If SPR is built against Root, the user can 1) switch between
+	reading from Ascii or Root files using "-a" option of the
+	executables, and 2) switch between writing to Ascii or Root
+	files using "-A" option.
+
+	Added scripts/check_execs.sh as a simple regression test of the
+	package.
+
+	Fixed a bug in SprOutputAnalyzerApp that forced the user to
+	supply -W flag.
+
+09.21.2007 narsky V07-01-02
+	Fixes a bug in SprOutputWriterApp.cc that caused the executable
+	to crash in the end if used without -K option.
+
+09.12.2007 narsky V07-01-01
+	Updated INSTALL with instructions on building against Root.
+
+08.30.2007 narsky V07-01-00
+	Removed the merge option from the constructor of the topdown
+	tree to avoid confusion on the user part. SprDecisionTreeApp
+	and SprBaggerDecisionTreeApp now explicitly forbid use of
+	topdown trees in case merging or an asymmetric optimization
+	FOM is requested by the user. The user is forced to use
+	decision trees with discrete output in that case.
+
+	Made a bunch of cosmetic changs to spr_plot.C, mostly to make
+	lines thicker, labels bigger and legends more informative.
+
+	SprTrainedMultiClassLearner constructor now by default chooses
+	quadratic loss, so the user does not have to set it manually
+	after reading from configuration files.
+
+08.14.2007 narsky V07-00-01
+	Added classification table print-out to SprMultiClassApp.cc.
+	A minor fix in SprPlotter.
+
+08.13.2007 narsky V07-00-00
+	Introducing SPR with an interactive Root interface. See
+	root/spr_tutorial.C.
+
+08.13.2007 narsky V06-07-01
+	A fix to reduce memory consumption by decision trees in case
+	of multiple classes.
+
+08.12.2007 narsky V06-07-00
+	Damn! That multi-class learner bug with decision trees turned
+	out harder to fix. I refixed it and tested on various extreme
+	cases. I hope that's the last of it.
+
+08.11.2007 narsky V06-06-00
+	Made SprTreeNode constructors and several methods private.
+
+	Fixed a bug in SprPlotter to make it work in cases when the
+	requested efficiency values have no events in between in the 
+	input data set.
+
+	Added -K option to SprOutputWriterApp.
+
+08.10.2007 narsky V06-05-00
+	Fixes the bug that caused incorrect assignment of classes
+	for a decision tree used by the multiclass learner.
+
+07.29.2007 narsky V06-04-01
+	Minor change.
+
+07.24.2007 narsky V06-04-00
+	Input datasets can now be split into training and validation
+	subsets, so the user does not need to supply two separate
+	datasets anymore. This option has been included in all
+	relevant executables.
+
+	Tools for plotting classifier response have been moved from
+	SprOutputAnalyzerApp to SprPlotter class.
+
+	Fixed a bug in SprSmpleReader that caused input weights to be
+	read incorrectly if SprPreFilter requirements were imposed for
+	weighted data. This did not affect any executables since
+	SprPreFilter is not used by default anywhere. If the user
+	attmpted to use SprPreFilter by modifying relevant code, his
+	results are fine for unweighted input ascii data or for input
+	ascii data with uniform weights but were affected
+	otherwise. The bug affected only input from ascii files; input
+	from Root files should be fine.
+
+	Implemented transformation of variables in SprPreFilter. See
+	exampleUserCuts.cc for an example.
+
+07.11.2007 narsky V06-03-00
+	Included generateCode() method for trained classifiers, as
+	requested in the Developers sourceforge forum a long time
+	ago. At the moment, there are implementations only for
+	SprTopdownTree, bagger and booster. SprAdaBoostDecisionTreeApp
+	and SprBaggerDecisionTreeApp got "-F" option to allow
+	generation of code. This only generates code for decision
+	trees; there is no code generation for the booster or bagger
+	themselves. It is up to the user to figure out how to combine
+	outputs of individual trees correctly in the generated code.
+
+	Allow the user to specify an arbitrary indicator matrix for
+	SprMultiClassApp.
+
+07.06.2007 narsky V06-02-00
+	Included SprVariableImportanceApp, an executable to estimate
+	relative importance of variables for an arbitrary classifier.
+
+06.19.2007 narsky V06-01-03, V06-01-04
+	Fixed a bug in SprOutputAnalyzerApp.cc. The histogram of
+	classifier output was incorrectly filled when all entries are
+	in one bin.
+
+06.10.2007 narsky V06-01-02
+	Fixed README.
+
+06.10.2007 narsky V06-01-01
+	Included a list of known problems and fixes in INSTALL. A
+	minor fix in SprTrainedCombiner.cc.
+
+05.29.2007 narsky V06-01-00
+	Added fastRemove() method to SprAbsFilter.
+
+05.28.2007 narsky V06-00-02
+	Fixed compiler bugs in SprRootReader.cc.
+
+05.25.2007 narsky V06-00-00
+	Fixed interface for SprCombinerApp.
+
+	Changed implementation of SprBumpHunter to store the current box 
+	internally as SprBox instead of vector<SprInterval>. The bump hunter
+	now stores only variables that were used for optimization into
+	the output config file. This can still produce infinite ranges for
+	some variables - if a cut was imposed on this variable at the 
+	shrinking stage and then relaxed to (-infty,+infty) at the expansion
+	stage, it will be displayed as an infinite range. But the 
+	variables that were never used for cuts are not displayed anymore.
+
+	I noticed that SprSort gives strange sorting results in some cases.
+	This is not understood and this would require investigation of 
+	this effect on different platforms and compilers. I reverted
+	to the slow stable_Sort for the bump hunter, binary split and
+	single decision tree because the speed is not a concern for
+	these methods. AdaBoost and random forest still use the fast 
+	sorting algorithm from SprSort because speed is a primamry
+	concern here (and any pathology would be likely alleviated by
+	randomization anyway). If the user feels paranoid, he should feel
+	free to get rid of all tree->useFastSort() calls and then the slow
+	algorithm will be used by default.
+
+05.23.2007 narsky in-20070523a
+	Introduced SprCombiner (aka "mixture of experts" method). 
+	The combiner is capable of training on subsets of variables
+	specified of the user and then training any classifier
+	in the output space of sub-classifiers trained on these subsets.
+
+	Introduced SprCoordinateMapper for mapping variables from subsets
+	onto the full variable list.
+
+	Fixed indexing of validation loss print-outs for SprStdBackprop.
+
+	SprPreFilter can now filter on user-defined classes.
+
+05.17.2007 narsky in-20070514a
+	Introduced SprPreFilter for pre-filtering input data on reading.
+	See example in src/exampleUserCuts.cc.
+
+	Simplified interface and implementation of SprBoxFilter. All
+	cut-related methods are removed from SprAbsFilter since they
+	did not belong there in the first place.
+
+	Minor changes to SprTreeNode and SprBumpHunter to simplify and
+	to comply with the changes in SprBoxFilter interface.
+
+	Fixed a bug in SprDecisionTreeApp which did not save variables for
+	the trained classifier into a classifier config file. Now that 
+	SprClassifierReader reads variables back from trained classifier
+	configs, the decision tree config produced by
+	SprDecisionTreeApp was broken.
+
+	Introduced individual variable mapping for each classifier supplied 
+	to SprDataFeeder. Introduced "-M" command-line option for 
+	SprOutputWriterApp which maps saved trained classifier variables
+	to variables from input data. This means that the user can train
+	a bunch of classifiers on different subsets of input variables and
+	then process them all with a single instance of 
+	SprOutputWriterApp using "-M" option. (Basically, this is an
+	implementation of the mixture-of-experts method.)
+
+05.14.2007 narsky V05-02-00
+	Implemented a bunch of features upon request from Babar PID group.
+
+	To support the persistency of SPR objects, SprClassifierReader
+	can now read from generic istream.
+
+	SPR version is saved as part of trained classifier configurations. 
+
+	Variables used to train a classifier are now read back in from
+	the saved configuration file. The user can inspect the list of
+	variables and check dimensionality before applying the trained
+	classifier to new data.
+
+	For consistency, all dimensionality mismatches in computation
+	of a trained classifier response are handled by assertions,
+	not error messages.
+
+	Included a fix to src/Makefile from Michael T.
+
+	Various minor fixes elsewhere.
+
+02.12.2007 narsky V05-01-00
+	Changed constructor for SprBagger and SprArcE4 to get rid of outdated
+	options. 
+
+	Introduced SprBaggerApp, an executable similar to SprBoosterApp,
+	capable of bagging any classifier. 
+
+	SprOutputWriterApp is now capable of computing output for
+	several input classifier configuration files at the same time.
+	It also understands "-Z" option for variable removal.
+
+	Fixed a couple of minor inaccuracies in SprBoosterApp.
+
+02.05.2007 narsky V05-00-01
+	SprClassifierReader is a unified tool for reading in all saved
+	classifier configurations. Introducing this tool required multiple
+	changes to the existing configuration format. The user won't be
+	able to read from configuration files made prior to this tag.
+
+	SprBoosterApp is the new executable capable of boosting an
+	arbitrary sequence of classifiers implemented in the package.
+
+	SprOutputWriterApp is the executable capable of reading saved 
+	configuration of any trained classifier and applying it to data.
+	This is the recommended choice for making ntuples of classifier
+	output.
+
+	Various minor fixes. Still fighting with underscores after
+	the "_x to x_" conversion.
+
+11.29.2006 narsky V04-05-02
+	A fix to prevent Real AdaBoost from returning infinite values.
+	I forgot to put it in for the previous tag....
+
+11.26.2006 narsky V04-05-01
+	Fixed a bug in SprTrainedRBF introduced in the last upgrade.
+
+	Fixed a few inaccuracies in README.
+
+	Fixed computation of validation loss for AdaBoost in pathological 
+	cases (affects Real AdaBoost only).
+
+	Also, prior to tag V04-05-00, SprAdaBoostDecisionTreeApp did not
+	read the AdaBoost training mode back from the saved
+	configuration file (the mode was read in for trained
+	classifiers, but not for trainable). This affected 
+	Real AdaBoost always and Epsilon Boost if you requested more
+	than zero training cycles after resuming from a saved
+	configuration. To obtain the correct result, you had to
+	specify AdaBoost mode manually on the command line for
+	resume. This is now fixed. However, there is a misleading
+	message produced by the executable which simply tells you what
+	-M was specified on the command line for the AdaBoost mode. If
+	you resume from a saved configuration, the AdaBoost mode is
+	set to whatever you have in the saved configuration and the
+	command-line -M option is overridden. The same is true for
+	epsilon which is used for Real AdaBoost - if you resume, it is
+	obtained from the saved configuration, not command line.
+
+11.25.2006 narsky V04-05-00
+	Implemented a trainable standard backprop neural net and
+	boosted neural nets. The relevant executable is
+	SprStdBackpropApp. See info on usage in README.
+
+	Fixed a bug in SprAdaBoost which affected the resume
+	option. If you resumed training and requested more than zero
+	training cycles and did not skip the initial event
+	reweighting, as suggested by README, you were affected. The
+	execution would stop in this case with an error message; so if
+	you never saw an error message, your analysis was not affected.
+
+11.13.2006 narsky in-20061113a
+	Changed from "_name" to "name_" convention for data members.
+	Replaced scanf with atof. Re-wrote SprTrainedStdBackprop.cc
+	to comply with better coding practice. This is an intermediate
+	tag; will be committed pending other changes.
+
+10.21.2006 narsky V04-04-00
+	Added a histogramming option to SprOutputAnalyzerApp.
+
+	Output of Fisher and logistic regression are by default mapped
+	onto the [0,1] interval using 1/(1+exp(-x)) transform. This
+	changes the default Fisher output. To obtain the old Fisher
+	output, use "-s" option of the executable. More detail is in
+	README.
+
+M INSTALL
+M include/StatPatternRecognition/SprTrainedFisher.hh
+M include/StatPatternRecognition/SprTrainedLogitR.hh
+M src/SprFisher.cc
+M src/SprFisherLogitApp.cc
+M src/SprLogitR.cc
+M src/SprOutputAnalyzerApp.cc
+M src/SprTrainedFisher.cc
+M src/SprTrainedLogitR.cc
+
+10.19.2006 narsky V04-03-00
+	Implemented logistic regression. SprFisherApp is moved to
+	SprFisherLogitApp which implements L(Q)DA and logistic
+	regression.
+
+	Added logistic regression and individual decision trees to
+	SprInteractiveAnalysisApp.
+	
+	Added a section on variable selection to README. Changes in
+	AdaBoost algorithm with respect to tag V03-05-00 are now
+	explained on top of README.
+
+	Installation instructions are made more explicit and moved
+	from README to INSTALL.
+
+	Added display of cuts to SprOutputAnalyzerApp. Introduced '-n'
+	option for shorter output.
+
+	Added '-Z' option for variable exclusion to
+	SprBaggerDecisionTreeApp, SprAdaBoostBinarySplitApp and
+	SprMultiClassBoostedSplitApp.
+
+	Minor cleanups and fixes.
+
+09.25.2006 narsky V04-02-01
+	Added display of a chosen FOM to SprOutputAnalyzerApp.
+
+09.23.2006 narsky V04-02-00
+	Changed conversion from (-infty,+infty) from doubleLogit() to
+	logit(); similar changes for the reverse conversion. Minor
+	fixes.
+
+09.21.2006 narsky V04-01-00
+        Various cleanups mostly affecting Real AdaBoost algorithm.
+
+09.20.2006 narsky V04-00-00
+        Introduced SprOutputAnalyzerApp for analysis of output ascii files.
+        From now on releasing as a standalone package.
+
+09.10.2006 narsky V03-06-01
+	Changed the ';' class separator to ':' for -y command-line options.
+	Apparently ';' is always treated as end-of-line by the SLAC batch
+	scheduler, even if it is put in quotes and works fine on command 
+	line. 
+	
+	Fixed a bug in SprInteractiveAnalysisApp.cc realted to epsilon-Boost.
+
+	Minor changes elsewhere.
+
+	This is most likely the last tag submitted to BaBar repository since
+	from now on SPR is distributed as a standalone package.
+M SprAbsFilter.hh
+M SprAdaBoostDecisionTreeApp.cc
+M SprInteractiveAnalysisApp.cc
+M SprStringParser.cc
+
+09.06.2006 narsky V03-06-00
+	Implemented epsilon-Boost. Modified implementation for Real AdaBoost
+	to force decision trees to ptoduce mixed nodes (with both categories
+	present and thus avoid infinite responses from the classifier.
+
+	Reduced default verbosity of several methods. To get the old
+	output for each decision tree constructed by AdaBoost, for example,
+	one now needs to use "-v 1" verbosity level.
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostBinarySplitReader.cc
+M SprAdaBoostDecisionTreeApp.cc
+M SprAdaBoostDecisionTreeReader.cc
+M SprAdaBoostTopdownTreeReader.cc
+M SprArcE4.cc
+M SprBagger.cc
+M SprBaggerDecisionTreeApp.cc
+M SprBinarySplit.cc
+M SprDecisionTree.cc
+M SprDecisionTree.hh
+M SprInteractiveAnalysisApp.cc
+M SprMultiClassBoostedSplitReader.cc
+M SprTrainedAdaBoost.cc
+M SprTrainedAdaBoost.hh
+M SprTreeNode.cc
+M SprTreeNode.hh
+
+09.04.2006 narsky V03-05-00
+	Implemented Real AdaBoost (in addition to the already-implemented
+	Discrete AdaBoost). Fixed a bug in SprTreeNode which caused an assert
+	to fail occasionally when events with zero weights were present.
+	Cleaned up executables a bit, especially SprInteractiveAnalysisApp.
+M SprAbsAdaBoostReader.cc
+M SprAbsAdaBoostReader.hh
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostBinarySplitReader.cc
+M SprAdaBoostCombiner.cc
+M SprAdaBoostDecisionTreeApp.cc
+M SprAdaBoostDecisionTreeReader.cc
+M SprAdaBoostTopdownTreeReader.cc
+M SprBaggerDecisionTreeApp.cc
+M SprInteractiveAnalysisApp.cc
+M SprMultiClassBoostedSplitApp.cc
+M SprMultiClassBoostedSplitReader.cc
+M SprTrainedAdaBoost.cc
+M SprTrainedAdaBoost.hh
+M SprTrainedDecisionTree.hh
+M SprTrainedTopdownTree.hh
+M SprTransformation.hh
+M SprTreeNode.cc
+
+08.31.2006 narsky V03-04-00
+	Added relative change in split criterion FOM for estimation 
+	of variable importance for decision trees. Described this in README.
+	Minor changes elsewhere.
+M README
+M SprDecisionTree.cc
+M SprDecisionTree.hh
+M SprTransformation.hh
+M SprTreeNode.cc
+M SprTreeNode.hh
+
+08.02.2006 narsky V03-03-00
+	Minor changes. Fixed a bug in SprStringParser caused by assignment
+	of result of string::find() to unsigned.
+M SprAdaBoostDecisionTreeApp.cc
+M SprStringParser.cc
+M SprTrainedFisher.hh
+M SprTransformation.hh
+
+07.22.2006 narsky V03-02-06
+	Added optional storing of classifier output to 
+	SprInteractiveAnalysisApp.
+M SprInteractiveAnalysisApp.cc
+
+07.17.2006 narsky V03-02-05
+	Bagger, booster and ercer now return true from train() method only if
+	the number of trained classifiers is greater than zero. Fixed a bug
+	in SprInteractiveAnalysisApp that prevented correctly storing 
+	classifier responses in case the number of events is not divisible
+	by 10.
+
+07.06.2006 narsky V03-02-04
+	Minor fixes.
+M SprInteractiveAnalysisApp.cc
+M SprTrainedStdBackprop.cc
+
+06.29.2006 narsky V03-02-03
+	Finished SprInteractiveAnalysis.
+M SprInteractiveAnalysisApp.cc
+
+06.26.2006 narsky V03-02-02
+	Minor (mostly) fixes. Adding a decision tree to AdaBoost requires
+	SprUtils::lowerBound(0.5). SprAdaBoostDecisionTreeApp performance
+	should not have been harmed but it was forced into unnecessary
+	operations (a small cpu overhead, I suppose).
+
+	SprInteractiveAnalysisApp is not finalized yet.
+M GNUmakefile
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostDecisionTreeApp.cc
+M SprMultiClassBoostedSplitApp.cc
+A SprInteractiveAnalysisApp.cc
+
+06.19.2006 narsky V03-02-01
+	Minor changes. Added print-out of the validation region to 
+	SprDecisionTreeApp.
+M SprArcE4.hh
+M SprDecisionTreeApp.cc
+M SprIntegerPermutator.hh
+
+05.06.2006 narsky V03-02-00
+	SprRootReader lets the user specify variables used for computation 
+	of weights. The resulting weight of the event is determined as the
+	product of all weights.
+
+	SprAdaBoostDecisionTreeApp now implements "-Z" option for variables
+	excluded from training but stored into the output ntuple. See
+	README for detail.
+
+	Minor fixes elsewhere.
+M README
+M SprAdaBoostDecisionTreeApp.cc
+M SprAdaBoostDecisionTreeReader.cc
+M SprBaggerDecisionTreeReader.cc
+M SprBoxFilter.cc
+M SprBumpHunter.cc
+M SprRootReader.cc
+M SprRootReader.hh
+M SprRootWriter.cc
+M SprTrainedRBF.cc
+M SprTreeNode.cc
+
+02.03.2006 narsky V03-01-02
+	Updated README.
+M README
+
+01.25.2006 narsky V03-01-01
+	Fixed the flatten() method for unequal intervals.
+M SprAbsFilter.cc
+
+01.24.2006 narsky V03-01-00
+	Retagging with minor changes.
+M README
+M SprRootReader.cc
+
+01.24.2006 narsky in-20060124a
+	Tagging SprRoot* classes from Harvard folks.
+
+	SprAbsFilter got two new methods: store() for storing data into
+	an ascii file and flatten() to flatten a multivariate distribution
+	in a specified variable.
+M SprAbsFilter.cc
+M SprAbsFilter.hh
+M SprAdaBoost.cc
+M SprRootReader.cc
+M SprRootReader.hh
+A SprRootWriter.cc
+A SprRootWriter.hh
+M SprTupleWriter.cc
+
+01.18.2006 narsky V03-00-00
+	Introduces a more flexible treatment of input
+	classes which allows arbitrary grouping. See Section 5 of README
+	and SprAbsFilter.hh for details.
+M SprAbsClassifier.hh
+M SprAbsCombiner.cc
+M SprAbsFilter.cc
+M SprAbsFilter.hh
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostCombiner.hh
+M SprAdaBoostDecisionTreeApp.cc
+M SprAverageLoss.hh
+M SprBagger.cc
+M SprBagger.hh
+M SprBaggerDecisionTreeApp.cc
+M SprBinarySplit.cc
+M SprBinarySplit.hh
+M SprBootstrap.cc
+M SprBumpHunter.cc
+M SprBumpHunter.hh
+M SprBumpHunterApp.cc
+A SprClass.cc
+A SprClass.hh
+M SprCrossValidator.cc
+M SprCrossValidator.hh
+M SprData.cc
+M SprData.hh
+M SprDecisionTree.cc
+M SprDecisionTree.hh
+M SprDecisionTreeApp.cc
+M SprEmptyFilter.hh
+M SprExploratoryAnalysisApp.cc
+M SprFisher.cc
+M SprFisher.hh
+M SprFisherApp.cc
+M SprFomCalculator.cc
+M SprFomCalculator.hh
+M SprGoFDecisionTreeApp.cc
+M SprMultiClassBoostedSplitApp.cc
+M SprPoint.hh
+M SprStringParser.cc
+M SprStringParser.hh
+M SprTreeNode.cc
+M SprTreeNode.hh
+M exampleBootstrapVarianceEst.cc
+M exampleCorrTest.cc
+
+01.09.2006 narsky V02-05-01
+	Minor fix.
+M SprExploratoryAnalysisApp.cc
+
+01.08.2006 narsky V02-05-00
+	Added two criteria for signal/background separation - one described
+	by Punzi in proceeding of Phystat 2003 and one based on Punzi's
+	criterion but with an additional background smoothing (with two
+	regularization parameters).
+
+	SprDataFeeder can now choose a subset of input variables to be
+	used for classifier response. The user can now save all variables
+	into ntuple with a classifier output computed for a fraction of these
+	variables.
+M SprBaggerDecisionTreeApp.cc
+M SprBumpHunterApp.cc
+M SprDataFeeder.cc
+M SprDataFeeder.hh
+M SprDecisionTreeApp.cc
+M SprExploratoryAnalysisApp.cc
+A SprTwoClassBgrndSmoother.hh
+A SprTwoClassPunzi.hh
+
+01.05.2006 narsky V02-04-00
+	Added setPermanentWeights() method to SprAbsFilter and modified
+	the GOF application to allow for rescaling of weights in one of the
+	categories.
+M SprAbsFilter.cc
+M SprAbsFilter.hh
+M SprGoFDecisionTreeApp.cc
+
+12.23.2005 narsky V02-03-05
+	Minor fix.
+M SprExploratoryAnalysisApp.cc
+
+12.12.2005 narsky V02-03-04
+	One more...
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostDecisionTreeApp.cc
+M SprBaggerDecisionTreeApp.cc
+M SprDecisionTreeApp.cc
+M SprFisherApp.cc
+
+12.12.2005 narsky V02-03-03
+	More fixes to suppress class 1.
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostDecisionTreeApp.cc
+M SprBaggerDecisionTreeApp.cc
+M SprBumpHunterApp.cc
+M SprDecisionTreeApp.cc
+M SprExploratoryAnalysisApp.cc
+M SprFisherApp.cc
+M SprMultiClassBoostedSplitApp.cc
+
+12.12.2005 narsky V02-03-02
+	Fixed a bug related to handling classes other than 0 and 1.
+M SprBumpHunterApp.cc
+M SprDecisionTreeApp.cc
+M SprExploratoryAnalysisApp.cc
+
+12.08.2005 narsky V02-03-00
+	Added arc-x4.
+A SprArcE4.cc
+A SprArcE4.hh
+M SprBagger.cc
+M SprBagger.hh
+M SprBaggerDecisionTreeApp.cc
+
+12.03.2005 narsky V02-02-00
+	Removed 'virtual' from one of SprAbsTrainedClassifier methods.
+
+	Implemented a sorting algorithm which can give a substantial
+	improvement in speed if there are many missing values in data.
+M SprAbsTrainedClassifier.hh
+M SprBinarySplit.cc
+M SprBumpHunter.cc
+M SprTreeNode.cc
+M SprUtils.hh
+
+12.02.2005 narsky V02-01-00
+	Two optional features have been added to AdaBoost: optional processing
+	of classifiers with continuous output (the default is still "discrete",
+	that is, a base classifier that returns either 0 or 1), and
+	optional sampling of input variables for each decision split in 
+	SprAdaBoostDecisionTreeApp (merging of boosting and the random forest
+	technology).
+
+	Various minor fixes.
+M README
+M SprAbsTrainedClassifier.cc
+M SprAbsTrainedClassifier.hh
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostCombiner.cc
+M SprAdaBoostDecisionTreeApp.cc
+M SprMultiClassBoostedSplitApp.cc
+M SprTrainedAdaBoost.cc
+M SprTrainedBagger.cc
+M SprTrainedBagger.hh
+
+11.29.2005 narsky V02-00-02
+	Changed logic of "." input specifications to distinguish between
+	entries like ".,0" and "0,.".
+M README
+M SprAbsFilter.cc
+M SprAbsFilter.hh
+
+11.28.2005 narsky V02-00-01
+	Minor fix to allow choosing class 0 as signal.
+M SprAbsFilter.cc
+
+11.27.2005 narsky V02-00-00
+	A major upgrade of the package to introduce a new treatment of
+	input categories.
+
+	Multi-class learning algoritm, Spr(Trained)MultiClassLearner,
+	is introduced. More details in README. One multi-class executable
+	is implemented - SprMultiClassBoostedSplitApp.
+
+	All other classifiers in the package remain binary (two-class).
+	But now the user can choose any pair of classes from input data
+	including "one vs all others" selection. See SprAbsFilter.hh for
+	more detail.
+
+	Two datasets have been added for playing with the multi-class 
+	algorithm.
+M GNUmakefile
+M README
+M SprAbsClassifier.hh
+M SprAbsCombiner.cc
+M SprAbsFilter.cc
+M SprAbsFilter.hh
+A SprAbsMultiClassLearner.hh
+A SprAbsTrainedMultiClassLearner.hh
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostCombiner.hh
+M SprAdaBoostDecisionTreeApp.cc
+M SprBagger.cc
+M SprBagger.hh
+M SprBaggerDecisionTreeApp.cc
+M SprBinarySplit.hh
+M SprBootstrap.cc
+M SprBumpHunter.hh
+M SprBumpHunterApp.cc
+M SprCrossValidator.cc
+M SprDataFeeder.cc
+M SprDataFeeder.hh
+M SprDecisionTree.cc
+M SprDecisionTree.hh
+M SprDecisionTreeApp.cc
+M SprEmptyFilter.hh
+M SprExploratoryAnalysisApp.cc
+M SprFisher.hh
+M SprFisherApp.cc
+M SprLoss.hh
+A SprMultiClassBoostedSplitApp.cc
+A SprMultiClassBoostedSplitReader.cc
+A SprMultiClassBoostedSplitReader.hh
+A SprMultiClassLearner.cc
+A SprMultiClassLearner.hh
+A SprTrainedMultiClassLearner.cc
+A SprTrainedMultiClassLearner.hh
+M SprTreeNode.cc
+M SprTreeNode.hh
+A gauss4_uniform_2d_train.pat
+A gauss4_uniform_2d_valid.pat
+
+11.24.2005 narsky V01-20-00
+	Minor cleanups. Fixed a stupid bug in 
+	SprTransformation::inftyRangeTo01().
+M SprAbsTrainedClassifier.hh
+M SprAbsWriter.hh
+M SprAdaBoost.cc
+M SprBagger.cc
+M SprFisher.cc
+M SprTransformation.hh
+
+11.23.2005 narsky V01-19-00
+	Removed indicator matrices since a multiclass learning algorithm
+	will be implemented in a different way.
+
+	Made the definition of the tagging efficiency symmetric.
+
+	Minor fixes in SprDecisionTree.cc related to how the overall FOM of
+	background nodes is computed.
+M SprAbsTrainedClassifier.hh
+R SprAbsWriter.cc
+M SprAbsWriter.hh
+M SprAsciiWriter.hh
+M SprDecisionTree.cc
+M SprTupleWriter.hh
+M SprTwoClassTaggerEff.hh
+
+11.12.2005 narsky V01-18-00
+	Fixed a bug in SprBagger related to computation of quadratic error 
+	loss for validation data. 
+
+	SprBaggerDecisionTreeApp and SprAdaBoostdecisionTreeApp now by default
+	use topdown trees, and the bagger by default uses topdown trees
+	with continuous output. See README for more detail.
+
+	Removed SprAdaBoostFisherReader.hh, which I somehow forgot to remove
+	earlier.
+M README
+M SprAdaBoostDecisionTreeApp.cc
+R SprAdaBoostFisherReader.hh
+M SprBagger.cc
+M SprBaggerDecisionTreeApp.cc
+M SprRandomNumber.cc
+
+11.09.2005 narsky V01-17-00
+	I decided that modeling each loss with a separate class is unnecessary.
+	All loss formulas are now moved to SprLoss. SprBagger is now capable
+	of displaying any user-defined loss for validation data.
+R SprAbsAverageLoss.hh
+M SprAdaBoostDecisionTreeApp.cc
+A SprAverageLoss.hh
+M SprBagger.cc
+M SprBagger.hh
+M SprBaggerDecisionTreeApp.cc
+M SprCrossValidator.cc
+M SprCrossValidator.hh
+R SprExponLoss.hh
+M SprFomCalculator.cc
+M SprFomCalculator.hh
+A SprLoss.hh
+R SprQuadrLoss.hh
+
+11.08.2005 narsky V01-16-00
+	Included an optional transformation in the loss calculation.
+	Quadratic loss from AdaBoost is now directly comparable to that from
+	a neural net or the bagger.
+M SprAbsAverageLoss.hh
+M SprAdaBoostDecisionTreeApp.cc
+M SprExponLoss.hh
+M SprQuadrLoss.hh
+A SprTransformation.hh
+
+11.07.2005 narsky V01-15-00
+	Implemented a more efficient permutation algorithm.
+M SprCrossValidator.cc
+M SprGoFDecisionTreeApp.cc
+M SprIntegerPermutator.cc
+M SprIntegerPermutator.hh
+
+11.07.2005 narsky V01-14-00
+	Minor changes, mostly added some print-outs.
+M SprBaggerDecisionTreeApp.cc
+M SprCrossValidator.cc
+M SprGoFDecisionTreeApp.cc
+M SprIntegerPermutator.cc
+M SprIntegerPermutator.hh
+
+11.06.2005 narsky V01-13-00
+	Boosted Fisher discriminants are discontinued.
+
+	Introduced an interface, SprAbsAverageLoss, for per-event loss
+	and provided two implementations: squared loss (SprQuadrLoss)
+	and exponential loss (SprExponLoss). Cross-validation algorithm
+	can now use per-event loss.
+
+	Introduced an optional discrete flag in the decision tree
+	constructor. By setting it to false, one can force the output
+	of the decision tree to be continuous. The "-k" option of
+	SprBaggerDecisionTreeApp implements this feature. For detail,
+	see SprDecisionTree.hh and section on bagging in README.
+
+	Minor changes elsewhere.
+M GNUmakefile
+M HISTORY
+M README
+M SprAbsAdaBoostReader.cc
+A SprAbsAverageLoss.hh
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostCombiner.cc
+M SprAdaBoostDecisionTreeApp.cc
+R SprAdaBoostFisherApp.cc
+R SprAdaBoostFisherReader.cc
+M SprBagger.cc
+M SprBagger.hh
+M SprBaggerDecisionTreeApp.cc
+M SprCrossValidator.cc
+M SprCrossValidator.hh
+M SprDecisionTree.cc
+M SprDecisionTree.hh
+M SprDecisionTreeApp.cc
+A SprExponLoss.hh
+M SprFomCalculator.cc
+M SprFomCalculator.hh
+M SprGoFDecisionTreeApp.cc
+A SprQuadrLoss.hh
+M SprStdBackpropPlusAdaSplitApp.cc
+M SprTopdownTree.cc
+M SprTopdownTree.hh
+M SprTrainedAdaBoost.cc
+M SprTrainedAdaBoost.hh
+M SprTrainedBagger.cc
+M SprTrainedBagger.hh
+M SprTreeNode.cc
+M SprTreeNode.hh
+
+10.31.2005 narsky V01-12-02
+	Changed training cycle numbering to avoid the irritating repetition 
+	of "cycle 0" print-out.
+M SprAdaBoost.cc
+M SprBagger.cc
+
+10.20.2005 narsky V01-12-01
+	Optional random seed specification on the command line.
+M SprGoFDecisionTreeApp.cc
+
+10.19.2005 narsky V01-12-00
+	Added topdown trees to SprAdaBoostDecisionTreeApp ("-j" option).
+M SprAdaBoostDecisionTreeApp.cc
+A SprAdaBoostTopdownTreeReader.cc
+A SprAdaBoostTopdownTreeReader.hh
+M SprBaggerDecisionTreeApp.cc
+M SprTopdownTree.cc
+M SprTopdownTree.hh
+
+10.18.2005 narsky V01-11-00
+	Introducing a top-down decision tree. It implements the same training
+	algorithm as the regular SprDecisionTree, but the response time
+	of SprTrainedTopdownTree is greatly enhanced over that of
+	SprTrainedDecisionTree. This is important for the bagging algorithm
+	which typically benefits from large overtrained trees. 
+	Configuration files for SprTrainedTopdownTree can no longer be
+	easily interpreted because they represent a full path from the
+	top of the tree to the bottom, not a plain list of nodes.
+	The new tree can be used by invoking the "-j" option of the bagger
+	executable.
+M README
+M SprBaggerDecisionTreeApp.cc
+A SprBaggerTopdownTreeReader.cc
+A SprBaggerTopdownTreeReader.hh
+M SprDecisionTree.cc
+M SprDecisionTree.hh
+A SprTopdownTree.cc
+A SprTopdownTree.hh
+A SprTrainedNode.hh
+A SprTrainedTopdownTree.cc
+A SprTrainedTopdownTree.hh
+M SprTreeNode.cc
+M SprTreeNode.hh
+
+10.14.2005 narsky V01-10-00
+	Added optional print-out of background nodes for the decision tree.
+
+	Added SprGoFDecisionTreeApp, an executable for estimation of
+	consistency of two multivariate samples using a goodness-of-fit
+	method described by Friedman at Phystat 2003. 
+	uniform_on_uniform_2d.pat is included as an example for this 
+	executable.
+
+	Jan's changes are included in this tag.
+M GNUmakefile
+M SprDecisionTree.cc
+M SprDecisionTree.hh
+M SprDecisionTreeApp.cc
+A SprGoFDecisionTreeApp.cc
+M SprIntegerPermutator.cc
+M SprIntegerPermutator.hh
+A uniform_on_uniform_2d.pat
+
+10.13.2005 jstrube
+	Added support for weights. The weights can only be set per
+	file. The header of SprRootReader.hh has been appropriately updated.
+	The example trainRoot.pat has been updated.
+	The current solution is a bit of a hack, because weights and data are
+	processed separately by SprAbsFilter.
+M SprRootReader.cc
+M SprRootReader.hh
+M trainRoot.pat
+
+
+10.13.2005 narsky V01-09-00
+	All cernlib ranlux and rluxgo dependencies are moved into one class, 
+	SprRandomNumber. SprIntegerPermutator has been introduced to 
+	generate permutations of integer numbers. Classes that depend on
+	random number generation have been changed accordingly.
+M SprBootstrap.cc
+M SprBootstrap.hh
+M SprCrossValidator.cc
+M SprIntegerBootstrap.cc
+M SprIntegerBootstrap.hh
+A SprIntegerPermutator.cc
+A SprIntegerPermutator.hh
+A SprRandomNumber.cc
+A SprRandomNumber.hh
+M SprTrainedDecisionTree.hh
+
+10.10.2005 narsky V01-08-00
+	Tag Jan's changes.
+M SprRootReader.cc
+
+10.10.2005 jstrube
+	Added files SprRootReader.{cc,hh}
+	This is the first iteration of support to read data from ROOT files
+	instead of ASCII. At the moment, it does not implement weights and only
+	one format of the .pat file is supported.
+	chooseAll, chooseAllBut and chooseVars are only method stubs that return
+	false. That means that there is no support to exclude variables.
+	Please see SprRootReader.hh and trainRoot.pat for the input format.
+	Added ROOT dependencies for the BaBar Framework.
+A SprRootReader.cc
+A SprRootReader.hh
+A trainRoot.pat
+M bin_StatPatternRecognition.mk
+M link_StatPatternRecognition.mk
+
+
+10.10.2005 narsky V01-07-00
+	Provided optional bootstrapping of training points for AdaBoost
+	and included this feature in SprAdaBoostDecisionTreeApp.
+
+	Introduced methods in SprDataMoments for computation of the mean
+	of the absolute value of a given input variable and correlation
+	of the absolute value of a given variable with the class label;
+	included these methods in SprExploratoryAnalysisApp.
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostDecisionTreeApp.cc
+M SprDataMoments.cc
+M SprDataMoments.hh
+M SprExploratoryAnalysisApp.cc
+
+10.02.2005 narsky V01-06-02
+	SprBagger::reset() is forced to reset the random number generator 
+	seed using current time.
+M SprBagger.cc
+
+09.25.2005 narsky V01-06-01
+	Minor change to display more info about the content of the found
+	signal region.
+M SprBumpHunterApp.cc
+
+09.21.2005 narsky V01-06-00
+	Included cross-validation in SprDecisionTreeApp. 
+
+	Made a bunch of minor changes - mostly to make AdaBoost and Bagger
+	more robust in the "failing" mode, that is, when some subclassifiers
+	fail to train properly. Instead of giving up, AdaBoost and Bagger
+	can now produce results even if only a small fraction of 
+	subclassifiers succeeded.
+M SprAdaBoost.cc
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostDecisionTreeApp.cc
+M SprAdaBoostFisherApp.cc
+M SprBagger.cc
+M SprBagger.hh
+M SprBaggerDecisionTreeApp.cc
+M SprCrossValidator.cc
+M SprDecisionTreeApp.cc
+
+09.21.2005 narsky V01-05-00
+	Minor fixes.
+M README
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprCrossValidator.cc
+
+09.20.2005 narsky V01-04-00
+	Added cross-validation algorithm. It has been included in two 
+	executables: SprAdaBoostDecisionTreeApp and SprBaggerDecisionTreeApp.
+	See examples of usage in README.
+
+	Fixed a bug in SprBagger::setData() method. This method is not
+	normally used, and I would anticipate that the user will never 
+	need it.
+
+	Minor fixes elsewhere.
+M README
+M SprAbsFilter.cc
+M SprAdaBoost.cc
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostDecisionTreeApp.cc
+M SprAdaBoostFisherApp.cc
+M SprBagger.cc
+M SprBaggerDecisionTreeApp.cc
+M SprBoxFilter.cc
+M SprBoxFilter.hh
+A SprCrossValidator.cc
+A SprCrossValidator.hh
+A SprFomCalculator.cc
+A SprFomCalculator.hh
+
+09.18.2005 narsky V01-03-00
+	Reduced verbosity of the executables.
+
+	SprBagger is forced to be more stubborn: it does not bail out upon
+	failing to train one subclassifier but continues until the number
+	of failures exceeds the requested number of training cycles.
+
+	Added a new feature: the user can now exclude input variables from
+	optimization on the fly using "-z" option of executables. This is
+	convenient because one can dump multidimensional data into an ascii
+	file and then exclude a few variables on the command line 
+	without making any changes to the input ascii.
+
+	Minor cleanups in the executables.
+M SprAbsReader.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostDecisionTreeApp.cc
+M SprAdaBoostFisherApp.cc
+M SprBagger.cc
+M SprBaggerDecisionTreeApp.cc
+M SprBumpHunterApp.cc
+M SprDecisionTree.cc
+M SprDecisionTreeApp.cc
+M SprExploratoryAnalysisApp.cc
+M SprFisherApp.cc
+M SprRBFNetApp.cc
+M SprSimpleReader.cc
+M SprSimpleReader.hh
+M SprStdBackpropApp.cc
+M SprStdBackpropPlusAdaSplitApp.cc
+A SprStringParser.cc
+A SprStringParser.hh
+M SprTreeNode.cc
+
+09.16.2005 narsky V01-02-00
+	Introduced treatment of missing values. At the moment, this is
+	a primitive approach: the code replaces missing values with computed
+	weighted medians of the data distributions. Hopefully, will be
+	improved in the future.
+M SprAbsFilter.cc
+M SprAbsFilter.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostDecisionTreeApp.cc
+M SprBaggerDecisionTreeApp.cc
+M bin_StatPatternRecognition.mk
+
+09.15.2005 narsky V01-01-01
+	Minor fixes.
+M SprAdaBoostDecisionTreeReader.cc
+M SprBaggerDecisionTreeReader.cc
+M SprBootstrap.cc
+
+09.13.2005 narsky V01-01-00
+	Minor change to somewhat reduce memory consumption by decision trees.
+M SprTreeNode.cc
+M SprTreeNode.hh
+
+09.12.2005 narsky V01-00-01
+	Fixed a couple of bugs in SprExploratoryAnalysisApp.
+M SprExploratoryAnalysisApp.cc
+
+09.11.2005 narsky V01-00-00
+	Introduced a new format for storing trained configurations of boosted
+	and bagged decision trees. The new format significantly reduces the
+	file size needed for storage in high-dimensional problems. 
+	Classification by trained boosted and bagged decision trees has been
+	sped up as well. Note that the new format is backwards-incompatible.
+	The new SprAdaBoostDecisionTreeApp and SprBaggerDecisionTreeApp
+	won't be able to read from old configuration files.
+
+	Made changes to speed up random variable selection for the random
+	forest.
+
+	The previous tag allowed a bug in the resume option of SprBagger,
+	which is now fixed.
+M README
+M SprAbsFilter.hh
+M SprAdaBoostDecisionTreeReader.cc
+M SprBagger.cc
+M SprBaggerDecisionTreeReader.cc
+M SprBoxFilter.cc
+M SprBoxFilter.hh
+M SprBumpHunter.cc
+M SprDecisionTree.cc
+M SprDefs.hh
+M SprEmptyFilter.hh
+M SprIntegerBootstrap.cc
+M SprIntegerBootstrap.hh
+M SprTrainedDecisionTree.cc
+M SprTrainedDecisionTree.hh
+M SprTreeNode.cc
+M SprTreeNode.hh
+
+09.09.2005 narsky V00-41-00
+	Updated README.
+
+	The user can now choose the number of input variables to be sampled
+	during bagging with the random forest technology: the "-s" option
+	of SprBaggerDecisionTreeApp now takes an argument which defines the
+	max number of features to be sampled at each decision split.
+	Generation of initial seeds from time of day has been moved 
+	from SprBagger to the two bootstrap classes.
+M README
+M SprBagger.cc
+M SprBaggerDecisionTreeApp.cc
+M SprBootstrap.cc
+M SprBootstrap.hh
+M SprDecisionTree.cc
+M SprIntegerBootstrap.cc
+M SprIntegerBootstrap.hh
+
+09.07.2005 narsky V00-40-03
+	Updated README. Default optimization criterion for the bagged
+	decision trees is now Gini index.
+M README
+M SprBaggerDecisionTreeApp.cc
+
+09.01.2005 narsky V00-40-02
+	Celebrate Soviet Union's Day of Knowledge by minor cleanups.
+M SprTreeNode.cc
+
+08.31.2005 narsky V00-40-01
+	Added extra FOM's to the AdaBoost and Bagger executables.
+
+	Adjusted the decision tree node splitting routine to account
+	for symmetric/non-symmetric FOM's.
+M SprAdaBoostDecisionTreeApp.cc
+M SprBaggerDecisionTreeApp.cc
+M SprTreeNode.cc
+
+08.29.2005 narsky V00-40-00
+	Introduced symmetric() method of SprAbsTwoClassCriterion to explicitly
+	identify symmetric figures of merit such as Gini index etc. This
+	change has no effect on performance; this is merely to give the code
+	more clarity.
+M SprAbsTwoClassCriterion.hh
+M SprTreeNode.cc
+M SprTwoClassBKDiscovery.hh
+M SprTwoClassCrossEntropy.hh
+M SprTwoClassGiniIndex.hh
+M SprTwoClassIDFraction.hh
+M SprTwoClassPurity.hh
+M SprTwoClassSignalSignif.hh
+M SprTwoClassTaggerEff.hh
+M SprTwoClassUniformPriorUL90.hh
+
+08.29.2005 narsky V00-39-00
+	Added an option for saving intermediate AdaBoost training weights.
+	This allows to speed up the resume option of AdaBoost with extra
+	training cycles requested. See "-u" and "-k" options of AdaBoost
+	executables and see a relevant entry in README.
+M README
+M SprAbsFilter.cc
+M SprAbsFilter.hh
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostDecisionTreeApp.cc
+M SprAdaBoostFisherApp.cc
+M SprFisher.cc
+
+08.26.2005 narsky V00-38-00
+	Added a figure of merit for the discovery potential using the
+	prescription from Bityukov and Krasnikov.
+
+	Fixed an error in the resume option of AdaBoost. Events were not
+	properly reweighted if the number of training cycles after resume
+	was greater than one. For the normal use of AdaBoost executables
+	"-n 0 -r input.spr" just to save classified data into an ntuple,
+	this bug had no effect.
+M SprAbsAdaBoostReader.cc
+M SprAbsBaggerReader.cc
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprBaggerDecisionTreeApp.cc
+M SprBumpHunterApp.cc
+M SprDecisionTreeApp.cc
+M SprExploratoryAnalysisApp.cc
+A SprTwoClassBKDiscovery.hh
+
+08.25.2005 narsky V00-37-00
+	Implemented an option of creating a trained AdaBoost or Bagger
+	out of the saved configuration file directly without going through
+	an intermediate step of creating a trainable classifier. Made
+	corresponding changes to the executables.
+
+	Everything in SprPoint is now inlined and lives in the header file.
+A SprAbsAdaBoostReader.cc
+A SprAbsAdaBoostReader.hh
+A SprAbsBaggerReader.cc
+A SprAbsBaggerReader.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostBinarySplitReader.cc
+M SprAdaBoostBinarySplitReader.hh
+M SprAdaBoostDecisionTreeApp.cc
+M SprAdaBoostDecisionTreeReader.cc
+M SprAdaBoostDecisionTreeReader.hh
+M SprAdaBoostFisherApp.cc
+M SprAdaBoostFisherReader.cc
+M SprAdaBoostFisherReader.hh
+M SprBaggerDecisionTreeApp.cc
+M SprBaggerDecisionTreeReader.cc
+M SprBaggerDecisionTreeReader.hh
+R SprPoint.cc
+M SprPoint.hh
+M SprStdBackpropPlusAdaSplitApp.cc
+
+08.25.2005 narsky V00-36-01
+	Added modes 5 and 6 to SprSimpleReader for entering variable names
+	on different lines. Made corresponding changes to the executables.
+
+	Added print-out of variable names to SprAdaBoost, SprBagger and
+	SprFisher. Variable names are stored at the end of the output
+	classifier file for backwards compatibility.
+M SprAbsReader.hh
+M SprAdaBoost.cc
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostDecisionTreeApp.cc
+M SprAdaBoostFisherApp.cc
+M SprBagger.cc
+M SprBaggerDecisionTreeApp.cc
+M SprBumpHunterApp.cc
+M SprDecisionTreeApp.cc
+M SprExploratoryAnalysisApp.cc
+M SprFisher.cc
+M SprFisherApp.cc
+M SprRBFNetApp.cc
+M SprSimpleReader.cc
+M SprSimpleReader.hh
+M SprStdBackpropApp.cc
+M SprStdBackpropPlusAdaSplitApp.cc
+
+08.23.2005 narsky V00-36-00
+	Added the standard option to AdaBoost ("-s" option for AdaBoost
+	executables) that lets the user to switch from "normalized" AdaBoost
+	(output is in [0,1]) to the conventional AdaBoost described in
+	statistical textbooks (output in (-infty,+infty)).
+M SprAdaBoost.cc
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostDecisionTreeApp.cc
+M SprAdaBoostFisherApp.cc
+M SprTrainedAdaBoost.cc
+M SprTrainedAdaBoost.hh
+
+08.23.2005 narsky V00-35-00
+	Added a new option to the decision tree to count the number of splits
+	on input variables and modified the 3 relevant executables 
+	("-i" option). 
+
+	SprBagger is now forced to reset trainable subclassifiers back
+	to the original data after training has been completed. This is 
+	done to avoid attempts to access non-existent memory in case
+	someone wants to use the decision tree supplied to the bagger
+	after the bagger training.
+
+	SprTupleWriter has been modified to produce by default an HBOOK
+	file with record size 4096 and number of records 1M. This HBOOK file
+	may require bigpaw for reading. The user can switch to the older
+	SprTupleWriter.cc if bigpaw is not available.
+M SprAdaBoostDecisionTreeApp.cc
+M SprBagger.cc
+M SprBagger.hh
+M SprBaggerDecisionTreeApp.cc
+M SprDecisionTree.cc
+M SprDecisionTree.hh
+M SprDecisionTreeApp.cc
+M SprTreeNode.cc
+M SprTreeNode.hh
+M SprTupleWriter.cc
+
+08.21.2005 narsky V00-34-00
+	BaBar.hh includes have been moved to SprExperiment.hh. This is done
+	to make it easier for people outside Babar to adapt this package to
+	their environment.
+
+	Some SprAbsTrainedClassifier::response() and SprAbsWriter::write() 
+	methods have been made non-virtual to suppress compiler warning on Sun.
+
+	Inlining has been correctly implemented for SprData::at() and 
+	SprAbsFilter::atw().
+
+	Updated README.
+
+08.18.2005 narsky V00-33-00
+	Added SprAsciiWriter to ease up the pain for people who will install
+	this package outside Babar. Expanded comments and README.
+M README
+M SprAbsTrainedClassifier.hh
+M SprAbsWriter.hh
+A SprAsciiWriter.cc
+A SprAsciiWriter.hh
+M SprTupleWriter.hh
+
+08.17.2005 narsky V00-32-02
+	Updated README.
+M README
+
+08.05.2005 narsky V00-32-01
+	A minor change that results in a minor cpu speed-up. With 14 dimensions
+	and 500K training points, the effect is negligible but it should
+	be more important in multidimensional problems.
+M SprTreeNode.cc
+
+08.04.2005 narsky V00-32-00
+	Added a new criterion for minimization of a 90% upper limit
+	based on the Bayes formula with a uniform prior.
+M SprBaggerDecisionTreeApp.cc
+M SprBumpHunterApp.cc
+M SprDecisionTreeApp.cc
+M SprExploratoryAnalysisApp.cc
+A SprTwoClassUniformPriorUL90.hh
+
+07.27.2005 narsky V00-31-00
+	scaleWeights() method of SprAbsFilter is now applied to original
+	weights and therefore has an irreversible effect. A bug has been 
+	fixed in irreversibleFilter() that caused memory corruption in case
+	points were owned by the original data.
+M SprAbsFilter.cc
+M SprData.hh
+M SprExploratoryAnalysisApp.cc
+
+07.19.2005 narsky V00-30-01
+	Fixed the const term that shifts the position of the quadratic Fisher.
+M SprFisher.cc
+M SprTrainedFisher.hh
+
+07.17.2005 narsky V00-30-00
+	Made changes to speed up the resume option of AdaBoost and evaluation
+	of the figure of merit on validation data both for AdaBoost and 
+	for the bagger. AdaBoost now displays exponential loss instead of
+	the misclassified fraction for validation data.
+
+	The output of the bagger is now rescaled to be between 0 and 1. This
+	is done for consistency with other classifiers.
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprBagger.cc
+M SprBagger.hh
+M SprTrainedAdaBoost.hh
+M SprTrainedBagger.cc
+M SprTrainedBagger.hh
+
+07.13.2005 narsky V00-29-00
+	Added optional resampling of data variables for the decision tree
+	optimization. This method known as "random forest" is to be used
+	with bagging algorithms. A corresponding "-s" option has been added
+	to SprBaggerDecisionTreeApp.
+
+	SprIntegerBootstrap is the class used to resample data variables
+	by sampling with replacement from N integers ranging from 0 to N-1.
+M SprBagger.cc
+M SprBaggerDecisionTreeApp.cc
+M SprDecisionTree.cc
+M SprDecisionTree.hh
+A SprIntegerBootstrap.cc
+A SprIntegerBootstrap.hh
+M SprTreeNode.cc
+M SprTreeNode.hh
+
+07.08.2005 narsky V00-28-00
+	Added setData() method to SprAbsClassifier and all implementations
+	to change data sets during the training procedure. Added SprBagger,
+	a method for training classifiers by bagging, and its trained
+	counterpart. Added SprBaggerDecisionTreeApp, an executable for
+	decision trees with bagging. This method will be described in a
+	dedicated publication. 
+M GNUmakefile
+M SprAbsClassifier.hh
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostCombiner.hh
+A SprBagger.cc
+A SprBagger.hh
+A SprBaggerDecisionTreeApp.cc
+A SprBaggerDecisionTreeReader.cc
+A SprBaggerDecisionTreeReader.hh
+M SprBinarySplit.cc
+M SprBinarySplit.hh
+M SprBumpHunter.cc
+M SprBumpHunter.hh
+M SprDecisionTree.cc
+M SprDecisionTree.hh
+M SprFisher.cc
+M SprFisher.hh
+A SprTrainedBagger.cc
+A SprTrainedBagger.hh
+
+07.05.2005 narsky V00-27-02
+	plainReplica() method of SprBootstrap now saves event weights into
+	the generated replica as well. For weightedReplica(), saving weights
+	does not make sense because events are drawn with replacement
+	according to the weights. Drawing events according to the weights
+	and then assigning these weights to the drawn events would amount
+	to double counting.
+
+	Fixed an error in exampleBootstrapVarianceEst - I quoted wrong
+	numbers in the comments.
+
+	Minor cleanups elsewhere.
+M SprBinarySplit.cc
+M SprBootstrap.cc
+M SprBumpHunter.cc
+M SprTrainedAdaBoost.hh
+M SprTreeNode.cc
+M exampleBootstrapVarianceEst.cc
+
+06.28.2005 narsky V00-27-01
+	Changed verbosity level.
+M SprAbsReader.hh
+M SprAdaBoost.cc
+M SprTreeNode.cc
+
+06.27.2005 narsky V00-27-00
+	Reduced memory consumption by decision trees. It is now possible to
+	split huge data samples into really small tree nodes (I obtained 10K
+	nodes in one example, and this is not the limit).
+
+	Added SprAdaBoostDecisionTreeApp, an executable that implements
+	AdaBoost algorithm with decision trees. Also added the corresponding
+	reader, SprAdaBoostDecisionTreeReader.{hh,cc}, for the resume option.
+
+	SprAbsFilter got a new method, irreversibleFilter(). See description
+	in README.
+
+	Minor cleanups elsewhere.
+M GNUmakefile
+M README
+M SprAbsFilter.cc
+M SprAbsFilter.hh
+M SprAdaBoost.cc
+M SprAdaBoostBinarySplitReader.cc
+A SprAdaBoostDecisionTreeApp.cc
+A SprAdaBoostDecisionTreeReader.cc
+A SprAdaBoostDecisionTreeReader.hh
+M SprAdaBoostFisherApp.cc
+M SprDecisionTree.cc
+M SprTreeNode.cc
+M SprTreeNode.hh
+
+06.26.2005 narsky V00-26-01
+	Minor fixes.
+M SprAbsTrainedClassifier.cc
+M SprAdaBoost.cc
+M SprBinarySplit.cc
+M SprBumpHunter.cc
+M SprBumpHunterApp.cc
+M SprDecisionTree.cc
+M SprDecisionTreeApp.cc
+M SprTrainedAdaBoost.cc
+M SprTrainedBinarySplit.cc
+M SprTrainedDecisionTree.cc
+
+06.25.2005 narsky V00-26-00
+	Decision tree nodes are now sorted by signal purity, not by 
+	user-specified FOM, for merging. I have not seen a realistic problem
+	where this would matter, but it possible in principle to construct
+	a case when merging nodes by FOM does not give the optimal overall
+	FOM, while merging nodes by purity does - assuming that FOM
+	increases when purity increases and the total number of events is
+	kept fixed.
+
+	Changed unformatted print-out of several print() methods to 
+	print-out formatted with sprintf.
+
+	The decision tree and bump hunter now print out not only total weights
+	in the found nodes but also raw numbers of training events in
+	the nodes. This is useful when one needs to understand what
+	training statistic has been used.
+
+	Various minor cleanups.
+M README
+M SprAbsTrainedClassifier.cc
+M SprAdaBoost.cc
+M SprBinarySplit.cc
+M SprBumpHunter.cc
+M SprBumpHunter.hh
+M SprDecisionTree.cc
+M SprDecisionTree.hh
+M SprTrainedAdaBoost.cc
+M SprTrainedBinarySplit.cc
+M SprTrainedDecisionTree.cc
+M SprTrainedDecisionTree.hh
+M SprTreeNode.cc
+M SprTreeNode.hh
+
+06.08.2005 narsky V00-25-00
+	Added a method to SprDataMoments for computing correlation between
+	an input variable and true class labels. This method can be used
+	to identify variables with highest predictive power.
+
+	Replaced SprBinarySplitSelectionApp with SprExploratoryAnalysisApp.
+	The new executable finds most optimal two-sided intervals instead
+	of most optimal one-sided splits. A short description of its
+	functionality is provided on top of SprExploratoryAnalysisApp.cc.
+
+	Minor changes to SprBumpHunterApp.
+M GNUmakefile
+R SprBinarySplitSelectionApp.cc
+M SprBumpHunterApp.cc
+M SprDataMoments.cc
+M SprDataMoments.hh
+A SprExploratoryAnalysisApp.cc
+M SprStdBackpropPlusAdaSplitApp.cc
+
+06.06.2005 narsky V00-24-01
+	Minor changes.
+M SprBinarySplitSelectionApp.cc
+M SprBumpHunterApp.cc
+
+06.05.2005 narsky V00-24-00
+	AdaBoost now restores data weights not to the original weights
+	specified in the input ascii file, but to whatever the weights
+	were set to before AdaBoost was called. That is, if you use "-w"
+	option of an AdaBoost executable, the rescaled signal weights 
+	will be stored into the output ntuple instead of the original weights.
+M README
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+
+06.04.2005 narsky V00-23-01
+	Duh... of course, I forgot to check for null pointer!
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostFisherApp.cc
+M SprBumpHunterApp.cc
+M SprDecisionTreeApp.cc
+M SprFisherApp.cc
+M SprStdBackpropPlusAdaSplitApp.cc
+
+06.04.2005 narsky V00-23-00
+	Added a method to SprAbsFilter for rescaling weights in a given
+	category and added the new corresponding option to all relevant
+	executables.
+
+	Minor changes in SprBumpHunter and SprTreeNode.
+
+	SprAdaBoost is forced to be more "stubborn" now. Instead of bailing
+	out at the first trainable subclassifier that fails to find
+	a split with a misclassified fraction less than 0.5, AdaBoost
+	bails out when none of the trainable classifiers can find such a 
+	split. This should be important for discrete data with certain
+	configurations.
+M SprAbsFilter.cc
+M SprAbsFilter.hh
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostFisherApp.cc
+M SprBinarySplitSelectionApp.cc
+M SprBumpHunter.cc
+M SprBumpHunterApp.cc
+M SprDecisionTreeApp.cc
+M SprFisherApp.cc
+M SprStdBackpropPlusAdaSplitApp.cc
+M SprTreeNode.cc
+
+06.03.2005 narsky V00-22-00
+	Fixed algorithms for consistent handling of discrete data and 
+	provided a test file. These changes do not affect continuous data
+	- for all examples I looked at, the result was identical to that
+	obtained prior to these changes.
+
+	Fixed an error in SprBumpHunter that made it slow. The algorithm 
+	works obviously faster now.
+
+	"-s" option for AdaBoost executables is no longer supported.
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostCombiner.cc
+M SprAdaBoostCombiner.hh
+M SprAdaBoostFisherApp.cc
+M SprBinarySplit.cc
+M SprBinarySplit.hh
+M SprBumpHunter.cc
+M SprBumpHunter.hh
+M SprBumpHunterApp.cc
+M SprStdBackpropPlusAdaSplitApp.cc
+M SprTreeNode.cc
+M SprTreeNode.hh
+A discrete_square.pat
+
+06.01.2005 narsky V00-21-03
+	A bunch of changes for proper handling of events at the edges 
+	of the data. These should be important for classifying categorical
+	data. For continuous data with many entries these are completely
+	insignificant.
+
+	Rewrote the expansion part of the bump hunter algorithm. Instead
+	of trying to simultaneously expand the signal box into both directions 
+	in a certain dimension, the algorithm first finds an optimal 
+	expansion into one direction and then expands into the opposite 
+	direction. This algorithm is more robust and easier to understand.
+M SprAdaBoost.cc
+M SprBinarySplit.cc
+M SprBumpHunter.cc
+M SprDecisionTree.cc
+
+05.31.2005 narsky V00-21-02
+	Found a really irritating error in covariance matrix calculation
+	in SprDataMoments. A similar error somewhat affected the Fisher
+	calculation: the linear Fisher was unaffected but the quadratic 
+	term was somewhat distorted. For problems with a negligible quadratic 
+	term this is not an issue, of course - it will remain negligible.
+
+	SprBinarySplitSelectionApp now computes (correctly!) correlations 
+	between input variables.
+M SprBinarySplitSelectionApp.cc
+M SprDataMoments.cc
+M SprFisher.cc
+
+05.26.2005 narsky V00-21-01
+	Correction in the assignment of leaf nodes to categories. For
+	completely symmetric FOM's such as Gini index or cross-entropy,
+	a leaf node is kept in the final list only if it has not less signal
+	than background events.
+M SprTreeNode.cc
+
+05.25.2005 narsky V00-21-00
+	It occurred to me that the implemented definitions of the Gini index 
+	and cross-entropy were inconsistent with the tree algorithm for
+	node splitting. This is now fixed. Also, these two criteria are now
+	normalized to [-1,0] (because we use negative Gini index and negative
+	cross-entropy).
+M README
+M SprTreeNode.cc
+M SprTwoClassCrossEntropy.hh
+M SprTwoClassGiniIndex.hh
+
+05.24.2005 narsky V00-20-00
+	By default, the decision tree now does not merge terminal nodes to
+	maximize the overall FOM. Merging can be requested by the user by
+	specifying "-m" option for SprDecisionTreeApp.
+M README
+M SprDecisionTree.cc
+M SprDecisionTree.hh
+M SprDecisionTreeApp.cc
+
+05.10.2005 narsky V00-19-00
+	Added a bump hunting routine - an implementation of the PRIM algorithm.
+
+	SprTrainedDecisionTree now returns the node/bump index to which
+	this event belongs and these indices are stored to ntuples by
+	SprDecisionTreeApp and SprBumpHunterApp.
+
+	Minor changes elsewhere.
+M GNUmakefile
+M README
+A SprBumpHunter.cc
+A SprBumpHunter.hh
+A SprBumpHunterApp.cc
+M SprDecisionTreeApp.cc
+M SprTrainedDecisionTree.cc
+M SprTrainedDecisionTree.hh
+M SprTreeNode.cc
+M SprTwoClassIDFraction.hh
+M SprTwoClassPurity.hh
+M SprTwoClassSignalSignif.hh
+M SprTwoClassTaggerEff.hh
+M SprUtils.hh
+
+05.04.2005 narsky V00-18-00
+	Minor change to provide more detailed print-out info on the
+	trained tree.
+M SprDecisionTree.cc
+M SprDecisionTree.hh
+
+05.03.2005 narsky V00-17-00
+	A bunch of fixes and new additions.
+
+	Fixed a few errors that caused compilation problems on Solaris.
+
+	Added an implementation of a decision tree with a user-supplied
+	optimization criterion (see updated README for details). 
+	SprDecisionTreeApp is the ready-to-go executable for this method.
+
+	Supplied default empty implementations of the two indicator()
+	methods in SprAbsTrainedClassifier and removed these methods from
+	derived classes. Perhaps one day I will implement classifiers for
+	more than two categories. Until then this method is just a nuisance.
+
+	Removed init() method from SprAbsTwoClassCriterion and changed 
+	derived classes accordingly. I realized that this method only
+	makes things unnecessarily complicated and it does not have a clear
+	interpretation for all optimization criteria.
+
+	Replaced the S/B optimization criterion with the purity criterion,
+	S/(S+B). Added Gini index and cross-entropy as other possible
+	criteria. This is for enthusiasts to try them with the decision tree.
+M GNUmakefile
+M README
+M SprAbsTrainedClassifier.hh
+M SprAbsTwoClassCriterion.hh
+M SprAdaBoost.cc
+M SprBinarySplit.cc
+M SprBinarySplit.hh
+M SprBinarySplitSelectionApp.cc
+M SprBootstrap.cc
+A SprDecisionTree.cc
+A SprDecisionTree.hh
+A SprDecisionTreeApp.cc
+R SprStdBackpropCompareAdaSplitApp.cc
+M SprTrainedAdaBoost.hh
+M SprTrainedAdaBoostCombiner.hh
+M SprTrainedBinarySplit.hh
+A SprTrainedDecisionTree.cc
+A SprTrainedDecisionTree.hh
+M SprTrainedFisher.hh
+M SprTrainedRBF.hh
+M SprTrainedStdBackprop.hh
+A SprTreeNode.cc
+A SprTreeNode.hh
+A SprTwoClassCrossEntropy.hh
+A SprTwoClassGiniIndex.hh
+M SprTwoClassIDFraction.hh
+A SprTwoClassPurity.hh
+M SprTwoClassSignalSignif.hh
+R SprTwoClassSoverB.hh
+M SprTwoClassTaggerEff.hh
+A gauss2_uniform_2d_valid.pat
+
+04.29.2005 narsky V00-16-00
+	Changed signature of replica() method for bootstrap and changed 
+	executables accordingly. There are two methods now - plainReplica()
+	(equivalent to the old replica() method) which samples a replica
+	assuming equal weights for all events, and weightedReplica() which
+	samples taking into account user-supplied weights. weightedReplica() 
+	is the nominal method that can be always used; however, plainReplica()
+	is faster and for that reason should be preferred when all weights 
+	are equal.
+M SprBootstrap.cc
+M SprBootstrap.hh
+M SprStdBackpropCompareAdaSplitApp.cc
+M exampleBootstrapVarianceEst.cc
+
+04.26.2005 narsky V00-15-00
+	Minor cleanups in SprBinarySplit. Added methods to SprTrainedAdaBoost
+	to return the classifiers list and corresponding beta weights.
+
+	Changed the default weight initialization for input events from
+	1/N, where N is the sample size, to 1. It does not affect anything
+	(except the absolute scale of some figures of merit) but it seems
+	a more natural convention.
+M SprAbsFilter.cc
+M SprAbsFilter.hh
+M SprBinarySplit.cc
+M SprTrainedAdaBoost.hh
+
+04.20.2005 narsky V00-14-00
+	Added SprTwoClassSignalSignif and SprTwoClassSoverB, two optimization 
+	criteria, S/sqrt(S+B) and S/B, respectively. Added
+	figure-of-merit derivatives over signal and background 
+	to SprAbsTwoClassCriterion and corresponding implementations
+	to derived classes. Modified SprBinarySplit to give the user ability 
+	to optimize any criterion, not just minimize the misclassified 
+	fraction of events. 
+
+	Added a new executable, SprBinarySplitSelectionApp, which imposes
+	a binary split on each variable in the input sample and optimizes
+	each split using a criterion specified by the user. The executable
+	also computes classification correlations among the splits. This 
+	executable should be used for exploratory analysis and should
+	especially useful if the user wants to choose the most optimal (for
+	signal/background separation) and least correlated features from 
+	a long list of input variables. Note that the splits are one-sided
+	and hence not very efficient in a situation when a two-sided cut
+	on a certain variable is needed.
+M GNUmakefile
+M SprAbsFilter.cc
+M SprAbsFilter.hh
+M SprAbsTrainedClassifier.hh
+M SprAbsTwoClassCriterion.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprBinarySplit.cc
+M SprBinarySplit.hh
+A SprBinarySplitSelectionApp.cc
+M SprStdBackpropCompareAdaSplitApp.cc
+M SprStdBackpropPlusAdaSplitApp.cc
+M SprTrainedBinarySplit.hh
+M SprTwoClassIDFraction.hh
+A SprTwoClassSignalSignif.hh
+A SprTwoClassSoverB.hh
+M SprTwoClassTaggerEff.hh
+
+04.05.2005 narsky V00-13-00
+	Changed default behavior for finding an optimal binary split and
+	an optimal cut on the subclassifier output used in AdaBoost. 
+	Previously, the whole range of values (such as point coordinates 
+	in a certain dimension for the binary split) was divided into
+	a number of intervals (typically 10000) of equal length and 
+	the optimal cut was found by looping through these intervals. 
+	Now the binary split by default looks at all intervals between 
+	sorted points. This helps to find the position of an optimal cut
+	more accurately. For large data samples, one can speed up AdaBoost
+	training by using the old equal-length-interval approach, but
+	in general CPU is not a concern for AdaBoost training. To reproduce
+	the old behavior of the two AdaBoost executables, 
+	SprAdaBoostBinarySplitApp and SprAdaBoostFisherApp, use "-s 10000"
+	option.
+M README
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostCombiner.hh
+M SprAdaBoostFisherApp.cc
+M SprBinarySplit.cc
+M SprBinarySplit.hh
+M SprStdBackpropCompareAdaSplitApp.cc
+M SprStdBackpropPlusAdaSplitApp.cc
+
+03.30.2005 narsky V00-12-00
+	Added framework for combining several classifiers and training
+	a global classifier on their joint output (feature space). Implemented
+	an AdaBoost combiner that runs AdaBoost optimization in the feature
+	space. SprStdBackpropPlusAdaSplitApp is the executable that can be
+	used to combine neural net and AdaBoost in that way.
+
+	Minor modifications to existing classes:
+
+	Bootstrap now can limit the size of its replica to a fixed number
+	not greater than the size of the whole data sample.
+
+	Added remove() and weights() methods to SprAbsFilter to remove
+	points from data (convenient for making subsamples excluding
+	Bootstrap replicas) and setting weights.
+
+	SprStdBackpropCompareAdaSplitApp is an executable for cross-validation
+	of Bootstrap methods (not for public use).
+M GNUmakefile
+A SprAbsCombiner.cc
+A SprAbsCombiner.hh
+M SprAbsFilter.cc
+M SprAbsFilter.hh
+A SprAbsTrainedCombiner.cc
+A SprAbsTrainedCombiner.hh
+A SprAdaBoostCombiner.cc
+A SprAdaBoostCombiner.hh
+M SprBootstrap.cc
+M SprBootstrap.hh
+M SprDataFeeder.cc
+A SprStdBackpropCompareAdaSplitApp.cc
+A SprStdBackpropPlusAdaSplitApp.cc
+A SprTrainedAdaBoostCombiner.cc
+A SprTrainedAdaBoostCombiner.hh
+M SprTwoClassTaggerEff.hh
+
+03.21.2005 narsky V00-11-01
+	Made AdaBoost correctly print out validation error in the case
+	of weights in validation data not summing up to 1.
+M SprAdaBoost.cc
+
+03.19.2005 narsky V00-11-00
+	Changed return status of AdaBoost to false if one of trainable 
+	subclassifiers fails to train or reset itself.
+
+	AdaBoost automatically restores original event weights supplied
+	in the input filter, so the user does not have to reset them manually.
+	I made sure that only weights in the supplied filter are reset,
+	while all other filter requirements are not touched. For that,
+	I changed implementation of SprAbsFilter::resetWeights(). Now this
+	method restores weights only for events that pass the filter
+	requirements instead of bluntly copying all original weights.
+
+	Note that the weights will be restored to those used at the filter
+	construction. If the user modifies the weights after the filter
+	had been constructed and then feeds this filter into AdaBoost,
+	those intermediate weights will be lost. It is unlikely anyone
+	will want to use AdaBoost in this way.
+M README
+M SprAbsFilter.cc
+M SprAbsFilter.hh
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostFisherApp.cc
+
+03.16.2005 narsky V00-10-00
+	Tag Alex' changes with minor fixes. 
+	mode=3 of SprSimpleReader was broken in the last change.
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostFisherApp.cc
+M SprFisherApp.cc
+M SprRBFNetApp.cc
+M SprSimpleReader.cc
+M SprStdBackpropApp.cc
+M exampleBootstrapVarianceEst.cc
+M exampleCorrTest.cc
+
+03.14.2005 samuel 
+        Add constructor arguments to SprAbsFilter and SprEmptyFilter to
+        specify ownData flag. 
+
+	Change SprAbsReader interface to return a new filter from the
+	read() method instead of accepting an SprData object as
+	constructor argument.	This necessarily removes the ability to
+ 	append data from a file to an existing SprData.
+
+	Add a new input mode, number 4, to SprSimpleReader to read
+	weights with samples.
+
+	Update executables for SprAbsReader interface change.  While
+        we're at it, use auto_ptr where appropriate for memory
+	management. 
+M SprAbsFilter.cc
+M SprAbsFilter.hh
+M SprAbsReader.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostFisherApp.cc
+M SprEmptyFilter.hh
+M SprFisherApp.cc
+M SprRBFNetApp.cc
+M SprSimpleReader.cc
+M SprSimpleReader.hh
+M SprStdBackpropApp.cc
+M exampleBootstrapVarianceEst.cc
+M exampleCorrTest.cc
+
+03.12.2005 narsky V00-09-02
+	Provided instructions for package use.
+M README
+
+03.10.2005 narsky V00-09-01
+	Removed forced normalization of weights to 1 by SprAbsFilter.
+	The only place it was truly necessary is SprAdaBoost, and so
+	AdaBoost now makes sure that the weights are properly normalized
+	before starting training cycles. User can always properly normalize
+	weights for a data sample by invoking normalizeWeights() method
+	of the filter. This gives the user more flexibilty and allows him
+	to store original weights he specified for data into ntuple.
+
+	Also, changed estimation of the common covariance matrix for the
+	Fisher from plain averaging over all points to taking a weighted 
+	average of the two covariance matrices computed for separate
+	event categories. This affects only the linear Fisher discriminant
+	(because for the QDA a common covariance matrix is never computed).
+	The new algorithm gives no advantage in performance; it essentially
+	produces the same result as the old algorithm in cases when the
+	linear Fisher can be reasonably applied; but the code is more readable.
+
+	SprStdBackpropPlusAdaFisherApp no longer supported.
+M GNUmakefile
+M SprAbsFilter.cc
+M SprAdaBoost.cc
+M SprFisher.cc
+R SprStdBackpropPlusAdaFisherApp.cc
+
+03.07.2005 narsky V00-09-00
+	Added weights to SprAbsWriter output.
+M SprAbsWriter.cc
+M SprAbsWriter.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostFisherApp.cc
+M SprDataFeeder.cc
+M SprTupleWriter.cc
+M SprTupleWriter.hh
+M exampleBootstrapVarianceEst.cc
+
+03.04.2005 narsky V00-08-02
+	Removed a bunch of unnecessary STL includes.
+M SprAbsClassifier.hh
+M SprAbsReader.hh
+M SprAbsTrainedClassifier.cc
+M SprBootstrap.cc
+M SprTrainedAdaBoost.cc
+M SprTrainedBinarySplit.cc
+M SprTrainedBinarySplit.hh
+M SprTupleWriter.cc
+
+03.03.2005 narsky V00-08-01
+	Added optional histogramming of validation/test data.
+M SprFisherApp.cc
+
+03.02.2005 narsky V00-08-00
+	Data points are now sorted in a corresponding dimension when
+	an instance of SprBinarySplit is constructed. This significantly
+	speeds up AdaBoost training with binary splits.
+M SprBinarySplit.cc
+M SprBinarySplit.hh
+
+03.01.2005 narsky V00-07-00
+	Added features to SprAbsFilter for manipulation of weights.
+M SprAbsFilter.cc
+M SprAbsFilter.hh
+
+02.28.2005 narsky V00-06-00
+	Fixed an initialization error in SprTrainedBinarySplit. Implemented
+	optional print-out of misclassified fraction of events for AdaBoost
+	on validation data and changed the two AdaBoost executables, 
+	SprAdaBoostFisherApp and SprAdaBoostBinarySplitApp, accordingly. 
+	This pretty much completes the immediate list of features that
+	I had in mind for this package.
+M SprAbsClassifier.hh
+M SprAbsFilter.hh
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostBinarySplitApp.cc
+M SprAdaBoostFisherApp.cc
+M SprTrainedBinarySplit.cc
+M SprTrainedBinarySplit.hh
+
+02.27.2005 narsky V00-05-00
+	I changed binary splits to one-dimensional. This means that
+	AdaBoost now reweights events after cut on each dimension instead
+	of cutting on all dimensions first and only then reweighting.
+	This makes code simpler and seems to work generally better (but not
+	by much) than the previous algorithm.
+
+	Added the reader for reading stored AdaBoost configuration for binary
+	splits from a file. SprAdaBoostBinarySplitApp is now a fully
+	functional executable, and I have tested it on several idealistic
+	and realistic examples.
+
+	For the record, SprAdaBoostBinarySplitApp is cpu-inefficient
+	for now because it sorts input points in each dimension every time
+	to find an optimal split. In principle, one could pre-sort
+	for each category in each dimension and supply sorted copies
+	of input data to the binary split instances. I will eventually
+	implement a filter for this. This does not seem a serious concern
+	since I can, for example, run 30K AdaBoost iterations 
+	on 700K 3-dimensional points in xlong queue, and that is more
+	than enough.
+M SprAdaBoostBinarySplitApp.cc
+A SprAdaBoostBinarySplitReader.cc
+A SprAdaBoostBinarySplitReader.hh
+M SprAdaBoostFisherApp.cc
+M SprBinarySplit.cc
+M SprBinarySplit.hh
+M SprTrainedBinarySplit.cc
+M SprTrainedBinarySplit.hh
+
+02.25.2005 narsky V00-04-01
+	Minor fixes in binary split and AdaBoost training procedures
+	to prevent possible (but unlikely) crashes. Binary split method
+	has now been tested on various data sets and shown to work.
+	Moved SprAdaBoostBinarySplit to SprAdaBoostBinarySplitApp (I forgot
+	App!). Resume option for SprAdaBoostBinarySplitApp will be added later.
+M GNUmakefile
+M SprAdaBoost.cc
+R SprAdaBoostBinarySplit.cc
+A SprAdaBoostBinarySplitApp.cc
+M SprBinarySplit.cc
+M SprTrainedBinarySplit.cc
+
+02.24.2005 narsky V00-04-00
+	Fixed a bug in SprUtils related to cut-setting routine.
+	Fixed a bug in SprAbsFilter copy-constructor that caused unwanted
+	deletion of owned data. Added SprBinarySplit and a corresponding
+	executable. This method has not been well tested yet.
+M GNUmakefile
+M SprAbsFilter.hh
+M SprAdaBoost.cc
+A SprAdaBoostBinarySplit.cc
+A SprBinarySplit.cc
+A SprBinarySplit.hh
+M SprBoxFilter.hh
+M SprEmptyFilter.hh
+A SprTrainedBinarySplit.cc
+A SprTrainedBinarySplit.hh
+M SprUtils.hh
+
+02.24.2005 narsky V00-03-03
+	Changed default number of optimization divisions from 1K to 10K.
+	Added comments. Fixed AdaBoost logic for zero training cycles.
+	The idea is that now you can read from a file and store output
+	using the same executable, SprAdaBoostFisherApp, with "-n 0" option.
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostFisherApp.cc
+
+02.23.2005 narsky V00-03-02
+	Minor fixes.
+M SprAdaBoost.cc
+M SprAdaBoostFisherApp.cc
+M SprDataFeeder.cc
+M SprFisherApp.cc
+M SprRBFNetApp.cc
+M SprStdBackpropApp.cc
+M SprStdBackpropPlusAdaFisherApp.cc
+
+02.23.2005 narsky V00-03-01
+	Rewrote the cpu-inefficient routine of cut optimization for the
+	subclassifier output. AdaBoost got quite a bit faster now!
+M SprAdaBoost.cc
+
+02.22.2005 narsky V00-03-00
+	Fixed a bug in the resume capability of AdaBoost. Changed 
+	copy-constructor of SprAbsFilter to deep-copy pointers to data
+	points as opposed to just copying an overall pointer to data.
+	This will allow to delete the filter after a consecutive filter
+	has been made. 
+M SprAbsFilter.hh
+M SprAbsTrainedClassifier.cc
+M SprAdaBoost.cc
+M SprAdaBoostFisherReader.cc
+M SprData.cc
+M SprData.hh
+
+02.21.2005 narsky V00-02-00
+	A bunch of minor cleanups along with some important changes. 
+	
+	SprHbkWriter has been moved to SprTupleWriter; now it takes 
+	a pointer to a HepTupleManager and is therefore compatible with any
+	generic tuple manager interface. If HepTupleManager is not provided
+	by the user, SprTupleWriter books an HbkFile by default.
+
+	Trained AdaBoost can now be saved into a file, and training can
+	be resumed at the point it was stopped. SprAdaBoostFisherReader
+	has been added to read AdaBoost trained with Fisher discriminants
+	from a file; see SprAdaBoostFisherApp.cc for details.
+
+	A bunch of two-class criteria has been added with common interface
+	SprAbsTwoClassCriterion; these will be used eventually to define
+	various optimization criteria.
+
+	This version needs BaBar V00-11-05 to compile on Solaris because
+	of the std::count_if use.
+M GNUmakefile
+M SprAbsTrainedClassifier.cc
+M SprAbsTrainedClassifier.hh
+A SprAbsTwoClassCriterion.hh
+M SprAdaBoost.cc
+M SprAdaBoost.hh
+M SprAdaBoostFisherApp.cc
+A SprAdaBoostFisherReader.cc
+A SprAdaBoostFisherReader.hh
+M SprBootstrap.cc
+M SprData.cc
+M SprFisher.cc
+M SprFisherApp.cc
+R SprHbkWriter.cc
+R SprHbkWriter.hh
+M SprRBFNetApp.cc
+M SprStdBackpropApp.cc
+M SprStdBackpropPlusAdaFisherApp.cc
+M SprTrainedAdaBoost.cc
+M SprTrainedAdaBoost.hh
+M SprTrainedFisher.cc
+M SprTrainedFisher.hh
+M SprTrainedRBF.hh
+M SprTrainedStdBackprop.cc
+M SprTrainedStdBackprop.hh
+A SprTupleWriter.cc
+A SprTupleWriter.hh
+A SprTwoClassIDFraction.hh
+A SprTwoClassTaggerEff.hh
+M exampleBootstrapVarianceEst.cc
+
+02.16.2005 narsky V00-01-00
+	Minor cleanups mostly. Changed the signature of replica() method
+	in Bootstrap and took unneeded stuff out of SprTrainedRBF.
+M GNUmakefile
+M SprAbsFilter.hh
+M SprAdaBoostFisherApp.cc
+M SprBootstrap.cc
+M SprBootstrap.hh
+M SprTrainedRBF.cc
+M SprTrainedRBF.hh
+R exampleAdaWithRBFAndLinear.cc
+M exampleBootstrapVarianceEst.cc
+
+02.16.2005 narsky V00-00-01
+	First edition of the package.
+M GNUmakefile
+A HISTORY
+A README
+A SprAbsClassifier.cc
+A SprAbsClassifier.hh
+A SprAbsFilter.cc
+A SprAbsFilter.hh
+A SprAbsReader.hh
+A SprAbsSNNS.hh
+A SprAbsTrainedClassifier.cc
+A SprAbsTrainedClassifier.hh
+A SprAbsWriter.cc
+A SprAbsWriter.hh
+A SprAdaBoost.cc
+A SprAdaBoost.hh
+A SprAdaBoostFisherApp.cc
+A SprBootstrap.cc
+A SprBootstrap.hh
+A SprBoxFilter.cc
+A SprBoxFilter.hh
+A SprData.cc
+A SprData.hh
+A SprDataFeeder.cc
+A SprDataFeeder.hh
+A SprDataMoments.cc
+A SprDataMoments.hh
+A SprDefs.hh
+A SprEmptyFilter.hh
+A SprFisher.cc
+A SprFisher.hh
+A SprFisherApp.cc
+A SprHbkWriter.cc
+A SprHbkWriter.hh
+A SprPoint.cc
+A SprPoint.hh
+A SprRBFNetApp.cc
+A SprSimpleReader.cc
+A SprSimpleReader.hh
+A SprStdBackpropApp.cc
+A SprStdBackpropPlusAdaFisherApp.cc
+A SprTrainedAdaBoost.cc
+A SprTrainedAdaBoost.hh
+A SprTrainedFisher.cc
+A SprTrainedFisher.hh
+A SprTrainedRBF.cc
+A SprTrainedRBF.hh
+A SprTrainedStdBackprop.cc
+A SprTrainedStdBackprop.hh
+A SprUtils.hh
+A bin_StatPatternRecognition.mk
+A exampleAdaWithRBFAndLinear.cc
+A exampleBootstrapVarianceEst.cc
+A exampleCorrTest.cc
+A gauss2_uniform_2d_train.pat
+A gauss_uniform_2d_train.pat
+A gausscorr_uniform_2d_train.pat
+A link_StatPatternRecognition.mk
+A triangle_square_00_train.pat
+A triangle_square_RBF_trained.net
