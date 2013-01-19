@@ -24,14 +24,16 @@ AC_CHECK_HEADERS([float.h stdlib.h sys/time.h unistd.h])
 
 # Checks for typedefs, structures, and compiler characteristics.
 AC_HEADER_STDBOOL
+AC_CHECK_HEADERS([stddef.h])
 AC_C_CONST
 AC_C_INLINE
 AC_HEADER_TIME
+AC_TYPE_SIZE_T
 
 ## Checks for library functions.
 AC_FUNC_ERROR_AT_LINE
 AC_FUNC_STAT
-AC_CHECK_FUNCS([gettimeofday pow sqrt])
+AC_CHECK_FUNCS([gettimeofday pow sqrt floor])
 
 ## Default compiler flags
 DEFAULTCXXFLAGS="-O4"

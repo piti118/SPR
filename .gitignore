@@ -12,6 +12,7 @@ src/example*
 .deps
 .libs
 *.rpo
+autom4te.cache
 
 !src/example*.cc
 config.log
