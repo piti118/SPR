@@ -1,3 +1,2 @@
-ACLOCAL_AMFLAGS = -I m4
-SUBDIRS = math src include data
+SUBDIRS = src include
 EXTRA_DIST = HISTORY

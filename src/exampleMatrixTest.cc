@@ -1,8 +1,8 @@
 //$Id: exampleMatrixTest.cc,v 1.1 2007-11-07 00:56:14 narsky Exp $
 
 #include "StatPatternRecognition/SprExperiment.hh"
-#include "math/SprMatrix.hh"
-#include "math/SprSymMatrix.hh"
+#include "StatPatternRecognition/SprMatrix.hh"
+#include "StatPatternRecognition/SprSymMatrix.hh"
 
 #include <iostream>
 

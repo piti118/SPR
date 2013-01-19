@@ -16,7 +16,7 @@
 #include "StatPatternRecognition/SprAbsVarTransformer.hh"
 #include "StatPatternRecognition/SprVarTransformerReader.hh"
 #include "StatPatternRecognition/SprTransformerFilter.hh"
-#include "math/SprVector.hh"
+#include "StatPatternRecognition/SprVector.hh"
 
 #include <stdlib.h>
 #include <unistd.h>

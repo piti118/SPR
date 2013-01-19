@@ -39,8 +39,8 @@
 #include "StatPatternRecognition/SprCombiner.hh"
 #include "StatPatternRecognition/SprTrainedCombiner.hh"
 
-#include "math/SprVector.hh"
-#include "math/SprSymMatrix.hh"
+#include "StatPatternRecognition/SprVector.hh"
+#include "StatPatternRecognition/SprSymMatrix.hh"
 
 #include <iostream>
 #include <fstream>

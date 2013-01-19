@@ -14,7 +14,6 @@ else
    AM_CXXFLAGS += -O4
 endif
 
-libSPR_la_LIBADD = $(top_srcdir)/math/libSPRmath.la
 libSPR_la_SOURCES  = \
   SprDataMoments.cc                 SprDecisionTree.cc \
   SprFisher.cc                      SprFomCalculator.cc \
@@ -49,7 +48,11 @@ libSPR_la_SOURCES  = \
   SprGEP.cc                         SprTrainedGEP.cc \
   SprChromosome.cc                  SprTrainedBinaryEncoder.cc \
   SprBinaryEncoder.cc               SprReplaceMissing.cc \
-  SprIndicatorMatrix.cc             SprConfig.cc
+  SprIndicatorMatrix.cc             SprConfig.cc \
+  SprChiCdf.cc                      SprGenMatrix.cc \
+  SprMatrix.cc                      SprRanluxEngine.cc \
+  SprSymMatrix.cc                   SprSymMatrixInvert.cc \
+  SprVector.cc
 
 if WITH_ROOT
    libSPR_la_SOURCES  += SprRootReader.cc SprRootWriter.cc SprAdapterDict.C SprRootAdapter.cc

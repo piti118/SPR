@@ -15,7 +15,7 @@
 #define _SprIndicatorMatrix_HH
 
 #include "StatPatternRecognition/SprRandomNumber.hh"
-#include "math/SprMatrix.hh"
+#include "StatPatternRecognition/SprMatrix.hh"
 
 #include <vector>
 #include <utility>

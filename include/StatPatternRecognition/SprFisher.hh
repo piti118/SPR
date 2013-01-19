@@ -27,8 +27,8 @@
 #include "StatPatternRecognition/SprClass.hh"
 #include "StatPatternRecognition/SprTrainedFisher.hh"
 
-#include "math/SprSymMatrix.hh"
-#include "math/SprVector.hh"
+#include "StatPatternRecognition/SprSymMatrix.hh"
+#include "StatPatternRecognition/SprVector.hh"
 
 #include <string>
 #include <iostream>

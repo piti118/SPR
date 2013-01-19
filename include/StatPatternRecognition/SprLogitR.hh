@@ -21,7 +21,7 @@
 #include "StatPatternRecognition/SprClass.hh"
 #include "StatPatternRecognition/SprTrainedLogitR.hh"
 
-#include "math/SprVector.hh"
+#include "StatPatternRecognition/SprVector.hh"
 
 #include <string>
 #include <iostream>

@@ -20,7 +20,7 @@
 #ifndef _SprRandomNumber_HH
 #define _SprRandomNumber_HH
 
-#include "math/SprRanluxEngine.hh"
+#include "StatPatternRecognition/SprRanluxEngine.hh"
 
 class SprRandomNumber
 {

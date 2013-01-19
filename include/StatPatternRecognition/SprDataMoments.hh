@@ -40,8 +40,8 @@
 #ifndef _SprDataMoments_HH
 #define _SprDataMoments_HH
 
-#include "math/SprSymMatrix.hh"
-#include "math/SprVector.hh"
+#include "StatPatternRecognition/SprSymMatrix.hh"
+#include "StatPatternRecognition/SprVector.hh"
 
 class SprAbsFilter;
 

@@ -24,7 +24,7 @@
 
 #include "StatPatternRecognition/SprAbsTrainedClassifier.hh"
 
-#include "math/SprVector.hh"
+#include "StatPatternRecognition/SprVector.hh"
 
 #include <vector>
 #include <iostream>

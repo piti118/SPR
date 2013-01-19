@@ -3,9 +3,7 @@
 
 AC_PREREQ(2.57)
 AC_INIT([StatPatternRecognition],[3.3.2],[andy.buckley@durham.ac.uk],[SPR])
-AC_CONFIG_MACRO_DIR([m4])
 AC_CONFIG_SRCDIR([src/SprRandomNumber.cc])
-AC_CONFIG_AUX_DIR([config])
 #AC_CONFIG_HEADER([include/StatPatternRecognition.hh])
 
 AM_INIT_AUTOMAKE(dist-bzip2)
@@ -129,10 +127,8 @@ AC_SUBST(AM_CXXFLAGS)
 AC_SUBST(CXXFLAGS)
 
 AC_CONFIG_FILES(Makefile)
-AC_CONFIG_FILES(math/Makefile)
 AC_CONFIG_FILES(src/Makefile)
 AC_CONFIG_FILES(include/Makefile)
 AC_CONFIG_FILES(include/StatPatternRecognition/Makefile)
-AC_CONFIG_FILES(data/Makefile)
 
 AC_OUTPUT

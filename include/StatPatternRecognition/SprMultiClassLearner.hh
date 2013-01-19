@@ -24,7 +24,7 @@
 
 #include "StatPatternRecognition/SprAbsMultiClassLearner.hh"
 #include "StatPatternRecognition/SprTrainedMultiClassLearner.hh"
-#include "math/SprMatrix.hh"
+#include "StatPatternRecognition/SprMatrix.hh"
 
 #include <vector>
 #include <utility>

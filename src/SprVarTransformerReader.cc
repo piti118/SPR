@@ -8,7 +8,7 @@
 #include "StatPatternRecognition/SprReplaceMissing.hh"
 #include "StatPatternRecognition/SprVarTransformerSequence.hh"
 #include "StatPatternRecognition/SprDefs.hh"
-#include "math/SprMatrix.hh"
+#include "StatPatternRecognition/SprMatrix.hh"
 
 #include <fstream>
 #include <sstream>

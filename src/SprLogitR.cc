@@ -9,8 +9,8 @@
 #include "StatPatternRecognition/SprDefs.hh"
 #include "StatPatternRecognition/SprUtils.hh"
 
-#include "math/SprMatrix.hh"
-#include "math/SprSymMatrix.hh"
+#include "StatPatternRecognition/SprMatrix.hh"
+#include "StatPatternRecognition/SprSymMatrix.hh"
 
 #include <stdio.h>
 #include <iostream>

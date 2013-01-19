@@ -68,8 +68,8 @@
 #include "StatPatternRecognition/SprInputNormalizer.hh"
 #include "StatPatternRecognition/SprVarTransformerSequence.hh"
 
-#include "math/SprSymMatrix.hh"
-#include "math/SprVector.hh"
+#include "StatPatternRecognition/SprSymMatrix.hh"
+#include "StatPatternRecognition/SprVector.hh"
 
 #include <iostream>
 #include <cassert>

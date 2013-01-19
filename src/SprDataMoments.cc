@@ -5,7 +5,7 @@
 #include "StatPatternRecognition/SprAbsFilter.hh"
 #include "StatPatternRecognition/SprPoint.hh"
 #include "StatPatternRecognition/SprUtils.hh"
-#include "math/SprChiCdf.hh"
+#include "StatPatternRecognition/SprChiCdf.hh"
 
 #include <iostream>
 #include <cassert>

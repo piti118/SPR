@@ -5,8 +5,8 @@
 #include "StatPatternRecognition/SprInputNormalizer.hh" 
 #include "StatPatternRecognition/SprDataMoments.hh" 
 #include "StatPatternRecognition/SprDefs.hh"
-#include "math/SprVector.hh"
-#include "math/SprSymMatrix.hh"
+#include "StatPatternRecognition/SprVector.hh"
+#include "StatPatternRecognition/SprSymMatrix.hh"
 
 #include <cassert>
 #include <cmath>

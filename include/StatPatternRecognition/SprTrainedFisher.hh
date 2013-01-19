@@ -38,8 +38,8 @@
 #define _SprTrainedFisher_HH
 
 #include "StatPatternRecognition/SprAbsTrainedClassifier.hh"
-#include "math/SprVector.hh"
-#include "math/SprSymMatrix.hh"
+#include "StatPatternRecognition/SprVector.hh"
+#include "StatPatternRecognition/SprSymMatrix.hh"
 
 #include <vector>
 #include <iostream>

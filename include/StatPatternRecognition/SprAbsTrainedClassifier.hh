@@ -21,7 +21,7 @@
 #ifndef _SprAbsTrainedClassifier_HH
 #define _SprAbsTrainedClassifier_HH
 
-#include "math/SprVector.hh"
+#include "StatPatternRecognition/SprVector.hh"
 #include "StatPatternRecognition/SprPoint.hh"
 #include "StatPatternRecognition/SprDefs.hh"
 

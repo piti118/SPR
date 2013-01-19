@@ -20,7 +20,7 @@
 #define _SprTrainedMultiClassLearner_HH
 
 #include "StatPatternRecognition/SprAbsTrainedMultiClassLearner.hh"
-#include "math/SprMatrix.hh"
+#include "StatPatternRecognition/SprMatrix.hh"
 
 #include <vector>
 #include <map>

@@ -19,7 +19,7 @@
 #define _SprPCATransformer_HH
 
 #include "StatPatternRecognition/SprAbsVarTransformer.hh"
-#include "math/SprMatrix.hh"
+#include "StatPatternRecognition/SprMatrix.hh"
 
 #include <string>
 #include <vector>
