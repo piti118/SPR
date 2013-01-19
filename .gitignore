@@ -14,6 +14,8 @@ src/example*
 *.rpo
 autom4te.cache
 config.status
+Makefile
+libtool
 
 !src/example*.cc
 config.log
