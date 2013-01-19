@@ -16,6 +16,7 @@ autom4te.cache
 config.status
 Makefile
 libtool
+configure.scan
 
 !src/example*.cc
 config.log

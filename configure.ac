@@ -131,6 +131,5 @@ AC_SUBST(CXXFLAGS)
 AC_CONFIG_FILES(Makefile)
 AC_CONFIG_FILES(src/Makefile)
 AC_CONFIG_FILES(include/Makefile)
-AC_CONFIG_FILES(include/StatPatternRecognition/Makefile)
 
 AC_OUTPUT
