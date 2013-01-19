@@ -2,7 +2,7 @@
 # Process this file with autoconf to produce a configure script.
 
 AC_PREREQ(2.57)
-AC_INIT([StatPatternRecognition],[3.3.2],[andy.buckley@durham.ac.uk],[SPR])
+AC_INIT([StatPatternRecognition],[3.3.2],[andy.buckley@durham.ac.uk],[StatPatternRecognition])
 AC_CONFIG_SRCDIR([src/SprRandomNumber.cc])
 #AC_CONFIG_HEADER([include/StatPatternRecognition.hh])
 

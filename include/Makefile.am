@@ -1,4 +1,4 @@
-include_HEADERS = \
+pkginclude_HEADERS = \
   StatPatternRecognition/SprFomCalculator.hh                StatPatternRecognition/SprIntegerBootstrap.hh \
   StatPatternRecognition/SprAbsClassifier.hh                StatPatternRecognition/SprIntegerPermutator.hh \
   StatPatternRecognition/SprCombiner.hh                     StatPatternRecognition/SprLoss.hh \
@@ -51,4 +51,4 @@ if WITH_ROOT
     TMP_ROOT_FILES = StatPatternRecognition/SprAdapterDict.h StatPatternRecognition/SprRootAdapter.hh
 endif
 
-include_HEADERS += $(TMP_ROOT_FILES)
+pkginclude_HEADERS += $(TMP_ROOT_FILES)
