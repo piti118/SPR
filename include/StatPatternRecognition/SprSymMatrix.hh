@@ -107,7 +107,7 @@
 
 #include <vector>
 
-#include "SprGenMatrix.hh"
+#include "StatPatternRecognition/SprGenMatrix.hh"
 
 class SprMatrix;
 class SprVector;

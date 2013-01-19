@@ -48,7 +48,7 @@
 #ifndef _SprVector_HH
 #define _SprVector_HH
 
-#include "SprGenMatrix.hh"
+#include "StatPatternRecognition/SprGenMatrix.hh"
 
 class SprMatrix;
 class SprSymMatrix;

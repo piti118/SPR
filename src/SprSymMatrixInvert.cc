@@ -7,7 +7,7 @@
 
 #include <cmath>
 
-#include "SprSymMatrix.hh"
+#include "StatPatternRecognition/SprSymMatrix.hh"
 
 double SprSymMatrix::posDefFraction5x5 = 1.0;
 double SprSymMatrix::posDefFraction6x6 = 1.0;

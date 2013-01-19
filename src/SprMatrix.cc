@@ -40,9 +40,9 @@
 #include <cmath>
 #include <cstdlib>
 
-#include "SprMatrix.hh"
-#include "SprSymMatrix.hh"
-#include "SprVector.hh"
+#include "StatPatternRecognition/SprMatrix.hh"
+#include "StatPatternRecognition/SprSymMatrix.hh"
+#include "StatPatternRecognition/SprVector.hh"
 
 // Simple operation for all elements
 

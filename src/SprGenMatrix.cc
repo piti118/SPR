@@ -42,9 +42,9 @@
 #include <cmath>
 #include <cstdlib>
 
-#include "SprGenMatrix.hh"
-#include "SprSymMatrix.hh"
-#include "SprMatrix.hh"
+#include "StatPatternRecognition/SprGenMatrix.hh"
+#include "StatPatternRecognition/SprSymMatrix.hh"
+#include "StatPatternRecognition/SprMatrix.hh"
 
 double norm_infinity(const SprGenMatrix &m) {
   double max=0,sum;

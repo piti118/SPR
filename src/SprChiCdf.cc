@@ -3,7 +3,7 @@
 
 using namespace std;
 
-#include "SprChiCdf.hh"
+#include "StatPatternRecognition/SprChiCdf.hh"
 
 //****************************************************************************
 

@@ -39,9 +39,9 @@
 #include <cstring>
 #include <cfloat>        // for DBL_EPSILON
 
-#include "SprSymMatrix.hh"
-#include "SprMatrix.hh"
-#include "SprVector.hh"
+#include "StatPatternRecognition/SprSymMatrix.hh"
+#include "StatPatternRecognition/SprMatrix.hh"
+#include "StatPatternRecognition/SprVector.hh"
 
 // Simple operation for all elements
 

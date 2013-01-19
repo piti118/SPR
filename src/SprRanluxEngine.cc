@@ -37,8 +37,8 @@
 //
 // ===============================================================
 
-#include "SprRanluxEngine.hh"
-#include "SprSeedTable.hh"
+#include "StatPatternRecognition/SprRanluxEngine.hh"
+#include "StatPatternRecognition/SprSeedTable.hh"
 #include <cmath>	// for pow()
 #include <cstdlib>	// for abs() and div()
 //#include <iostream>

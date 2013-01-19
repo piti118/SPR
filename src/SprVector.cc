@@ -38,8 +38,8 @@
 
 #include <cstring>
 
-#include "SprVector.hh"
-#include "SprMatrix.hh"
+#include "StatPatternRecognition/SprVector.hh"
+#include "StatPatternRecognition/SprMatrix.hh"
 
 // Simple operation for all elements
 
