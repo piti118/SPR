@@ -13,6 +13,7 @@ src/example*
 .libs
 *.rpo
 autom4te.cache
+config.status
 
 !src/example*.cc
 config.log
